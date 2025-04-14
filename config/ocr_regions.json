@@ -1,0 +1,903 @@
+{
+    "pantalla_bienvenida": [
+        {
+            "region": {
+                "left": 1590,
+                "top": 1965,
+                "width": 673,
+                "height": 101
+            },
+            "expected_text": [
+                "Borrar actualización en vivo"
+            ]
+        }
+    ],
+    "menu_home_sel": [
+        {
+            "region": {
+                "left": 227,
+                "top": 52,
+                "width": 239,
+                "height": 87
+            },
+            "expected_text": [
+                "Home"
+            ]
+        }
+    ],
+    "menu_misiones_sel": [
+        {
+            "region": {
+                "left": 72,
+                "top": 52,
+                "width": 294,
+                "height": 99
+            },
+            "expected_text": [
+                "Misiones"
+            ]
+        }
+    ],
+    "menu_tienda_sel": [
+        {
+            "region": {
+                "left": 110,
+                "top": 59,
+                "width": 243,
+                "height": 101
+            },
+            "expected_text": [
+                "Tienda"
+            ]
+        }
+    ],
+    "menu_extras_sel": [
+        {
+            "region": {
+                "left": 212,
+                "top": 65,
+                "width": 269,
+                "height": 103
+            },
+            "expected_text": [
+                "Extras"
+            ]
+        }
+    ],
+    "bonus_inicio_sesion": [
+        {
+            "region": {
+                "left": 37,
+                "top": 32,
+                "width": 1551,
+                "height": 180
+            },
+            "expected_text": [
+                "Bonus de inicio de sesión"
+            ]
+        }
+    ],
+    "menu_home_partido_sel": [
+        {
+            "region": {
+                "left": 173,
+                "top": 467,
+                "width": 437,
+                "height": 139
+            },
+            "expected_text": [
+                "Partido"
+            ]
+        }
+    ],
+    "menu_home_estrategia_sel": [
+        {
+            "region": {
+                "left": 326,
+                "top": 478,
+                "width": 438,
+                "height": 160
+            },
+            "expected_text": [
+                "Estrategia"
+            ]
+        }
+    ],
+    "menu_home__miequipo_sel": [
+        {
+            "region": {
+                "left": 274,
+                "top": 483,
+                "width": 410,
+                "height": 145
+            },
+            "expected_text": [
+                "Mi equipo"
+            ]
+        }
+    ],
+    "menu_home_contrato_sel": [
+        {
+            "region": {
+                "left": 302,
+                "top": 479,
+                "width": 409,
+                "height": 155
+            },
+            "expected_text": [
+                "Contrato"
+            ]
+        }
+    ],
+    "menu_home_premijuego_sel": [
+        {
+            "region": {
+                "left": 361,
+                "top": 471,
+                "width": 396,
+                "height": 165
+            },
+            "expected_text": [
+                "Premijuego"
+            ]
+        }
+    ],
+    "menu_home_salir": [
+        {
+            "region": {
+                "left": 120,
+                "top": 504,
+                "width": 481,
+                "height": 148
+            },
+            "expected_text": [
+                "Salir del juego"
+            ]
+        }
+    ],
+    "menu_contrato_jugadores_especiales_sel": [
+        {
+            "region": {
+                "left": 208,
+                "top": 1305,
+                "width": 756,
+                "height": 407
+            },
+            "expected_text": [
+                "Jugadores especiales"
+            ]
+        },
+        {
+            "region": {
+                "left": 140,
+                "top": 86,
+                "width": 701,
+                "height": 175
+            },
+            "expected_text": [
+                "Contrato"
+            ]
+        }
+    ],
+    "menu_contrato_packs_sel": [
+        {
+            "region": {
+                "left": 1351,
+                "top": 1374,
+                "width": 362,
+                "height": 160
+            },
+            "expected_text": [
+                "Packs"
+            ]
+        },
+        {
+            "region": {
+                "left": 136,
+                "top": 34,
+                "width": 602,
+                "height": 172
+            },
+            "expected_text": [
+                "Contrato"
+            ]
+        }
+    ],
+    "menu_contrato_boletos_sel": [
+        {
+            "region": {
+                "left": 91,
+                "top": 1074,
+                "width": 1050,
+                "height": 286
+            },
+            "expected_text": [
+                "Boletos de jugador normal"
+            ]
+        }
+    ],
+    "menu_contrato_jugadores_normales_sel": [
+        {
+            "region": {
+                "left": 103,
+                "top": 1220,
+                "width": 986,
+                "height": 150
+            },
+            "expected_text": [
+                "Jugadores normales"
+            ]
+        }
+    ],
+    "menu_contrato_directores": [
+        {
+            "region": {
+                "left": 185,
+                "top": 1261,
+                "width": 928,
+                "height": 152
+            },
+            "expected_text": [
+                "Directores técnicos"
+            ]
+        }
+    ],
+    "menu_contrato_jugadoresNormales_lista": [
+        {
+            "region": {
+                "left": 138,
+                "top": 70,
+                "width": 1304,
+                "height": 200
+            },
+            "expected_text": [
+                "Jugadores normales"
+            ]
+        }
+    ],
+    "menu_contrato_jugadoresNormales_lista_raquel_sel": [
+        {
+            "region": {
+                "left": 737,
+                "top": 177,
+                "width": 469,
+                "height": 113
+            },
+            "expected_text": [
+                "Raquel Lombardi"
+            ]
+        }
+    ],
+    "menu_contrato_raquel_fichar": [
+        {
+            "region": {
+                "left": 863,
+                "top": 124,
+                "width": 1180,
+                "height": 171
+            },
+            "expected_text": [
+                "Raquel Lombardi"
+            ]
+        },
+        {
+            "region": {
+                "left": 2930,
+                "top": 1872,
+                "width": 809,
+                "height": 249
+            },
+            "expected_text": [
+                "Fichar"
+            ]
+        }
+    ],
+    "menu_contrato_raquel_confirmar_fichar_cancelar_sel": [
+        {
+            "region": {
+                "left": 314,
+                "top": 709,
+                "width": 1421,
+                "height": 239
+            },
+            "expected_text": [
+                "Cancelar"
+            ]
+        }
+    ],
+    "menu_contrato_raquel_confirmar_fichado": [
+        {
+            "region": {
+                "left": 2951,
+                "top": 1886,
+                "width": 815,
+                "height": 224
+            },
+            "expected_text": [
+                "Continuar"
+            ]
+        }
+    ],
+    "submenu_contrato_ordenar_precio_sel": [
+        {
+            "region": {
+                "left": 13,
+                "top": 33,
+                "width": 630,
+                "height": 214
+            },
+            "expected_text": [
+                "Ordenar"
+            ]
+        },
+        {
+            "region": {
+                "left": 13,
+                "top": 714,
+                "width": 448,
+                "height": 214
+            },
+            "expected_text": [
+                "Precio"
+            ]
+        }
+    ],
+    "submenu_contrato_jugadores_valor_sel": [
+        {
+            "region": {
+                "left": 41,
+                "top": 611,
+                "width": 638,
+                "height": 166
+            },
+            "expected_text": [
+                "Valor del jugador"
+            ]
+        }
+    ],
+    "submenu_contrato_jugadores_valoracion_sel": [
+        {
+            "region": {
+                "left": 40,
+                "top": 421,
+                "width": 959,
+                "height": 201
+            },
+            "expected_text": [
+                "Valoración general"
+            ]
+        }
+    ],
+    "submenu_contrato_jugadores_posicion_sel": [
+        {
+            "region": {
+                "left": 17,
+                "top": 251,
+                "width": 475,
+                "height": 199
+            },
+            "expected_text": [
+                "Posición"
+            ]
+        }
+    ],
+    "menu_miequipo_jugadores_lista_pos1_sel": [
+        {
+            "region": {
+                "left": 185,
+                "top": 67,
+                "width": 731,
+                "height": 203
+            },
+            "expected_text": [
+                "Jugadores"
+            ]
+        }
+    ],
+    "menu_miequipo_jugadores_lista": [
+        {
+            "region": {
+                "left": 251,
+                "top": 132,
+                "width": 787,
+                "height": 229
+            },
+            "expected_text": [
+                "Jugadores"
+            ]
+        },
+        {
+            "region": {
+                "left": 2100,
+                "top": 1932,
+                "width": 449,
+                "height": 171
+            },
+            "expected_text": [
+                "Cambiar info."
+            ]
+        }
+    ],
+    "menu_miequipo_jugadores_raquel_sel": [
+        {
+            "region": {
+                "left": 1071,
+                "top": 1915,
+                "width": 533,
+                "height": 165
+            },
+            "expected_text": [
+                "Acciones de jugador"
+            ]
+        },
+        {
+            "region": {
+                "left": 2117,
+                "top": 1960,
+                "width": 354,
+                "height": 99
+            },
+            "expected_text": [
+                "Cambiar info."
+            ]
+        }
+    ],
+    "menu_jugador_acciones_entrenamiento_sel": [
+        {
+            "region": {
+                "left": 19,
+                "top": 259,
+                "width": 691,
+                "height": 139
+            },
+            "expected_text": [
+                "Entrenamiento de nivel"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_progresion_sel": [
+        {
+            "region": {
+                "left": 9,
+                "top": 390,
+                "width": 770,
+                "height": 175
+            },
+            "expected_text": [
+                "Progresión del jugador"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_habilidad_sel": [
+        {
+            "region": {
+                "left": 33,
+                "top": 544,
+                "width": 771,
+                "height": 197
+            },
+            "expected_text": [
+                "Entrenamiento de habilidad"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_posicion_sel": [
+        {
+            "region": {
+                "left": 24,
+                "top": 703,
+                "width": 768,
+                "height": 187
+            },
+            "expected_text": [
+                "Entrenamiento de posición"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_transferencia_sel": [
+        {
+            "region": {
+                "left": 32,
+                "top": 838,
+                "width": 650,
+                "height": 169
+            },
+            "expected_text": [
+                "Transferencia pericia"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_bloquear": [
+        {
+            "region": {
+                "left": 20,
+                "top": 966,
+                "width": 384,
+                "height": 183
+            },
+            "expected_text": [
+                "Bloquear"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_despedir": [
+        {
+            "region": {
+                "left": 24,
+                "top": 1113,
+                "width": 476,
+                "height": 247
+            },
+            "expected_text": [
+                "Despedir"
+            ]
+        }
+    ],
+    "menu_jugador_accione_habilidad_vacia": [
+        {
+            "region": {
+                "left": 2082,
+                "top": 655,
+                "width": 253,
+                "height": 200
+            },
+            "expected_text": [
+                "+"
+            ]
+        },
+        {
+            "region": {
+                "left": 1878,
+                "top": 371,
+                "width": 694,
+                "height": 107
+            },
+            "expected_text": [
+                "Habilidades adicionales"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_habilidad_menuentrenar_cancelar_sel": [
+        {
+            "region": {
+                "left": 28,
+                "top": 39,
+                "width": 1795,
+                "height": 196
+            },
+            "expected_text": [
+                "Realizar sesión de entrenamiento"
+            ]
+        },
+        {
+            "region": {
+                "left": 216,
+                "top": 693,
+                "width": 1472,
+                "height": 243
+            },
+            "expected_text": [
+                "Cancelar"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_submenu_entrenar_x1_sel": [
+        {
+            "region": {
+                "left": 795,
+                "top": 532,
+                "width": 288,
+                "height": 112
+            },
+            "expected_text": [
+                "x1"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_habilidad_entrenada": [
+        {
+            "region": {
+                "left": 102,
+                "top": 38,
+                "width": 1534,
+                "height": 687
+            },
+            "expected_text": [
+                "OK"
+            ]
+        }
+    ],
+    "menu_jugador_acciones_habilidad_existe": [
+        {
+            "region": {
+                "left": 2722,
+                "top": 535,
+                "width": 708,
+                "height": 432
+            },
+            "expected_text": [
+                "+"
+            ]
+        }
+    ],
+    "menu_partido_torneo_sel": [
+        {
+            "region": {
+                "left": 118,
+                "top": 1406,
+                "width": 682,
+                "height": 115
+            },
+            "expected_text": [
+                "Torneo"
+            ]
+        }
+    ],
+    "menu_partido_eventos_sel": [
+        {
+            "region": {
+                "left": 73,
+                "top": 1220,
+                "width": 1014,
+                "height": 150
+            },
+            "expected_text": [
+                "Eventos"
+            ]
+        }
+    ],
+    "menu_partido_eventos_JcJ_sel": [
+        {
+            "region": {
+                "left": 381,
+                "top": 85,
+                "width": 222,
+                "height": 111
+            },
+            "expected_text": [
+                "JcJ"
+            ]
+        }
+    ],
+    "menu_partido_eventos_IA_sel": [
+        {
+            "region": {
+                "left": 247,
+                "top": 56,
+                "width": 354,
+                "height": 87
+            },
+            "expected_text": [
+                "Contra la IA"
+            ]
+        }
+    ],
+    "menu_partido_eventos_ia_partido1_sel": [
+        {
+            "region": {
+                "left": 36,
+                "top": 14,
+                "width": 1149,
+                "height": 407
+            },
+            "expected_text": []
+        }
+    ],
+    "menu_partido_eventos_ia_partido2_sel": [
+        {
+            "region": {
+                "left": 1687,
+                "top": 64,
+                "width": 298,
+                "height": 85
+            },
+            "expected_text": [
+                "Continuar"
+            ]
+        }
+    ],
+    "menu_partido_eventos_ia_partido": [
+        {
+            "region": {
+                "left": 379,
+                "top": 465,
+                "width": 185,
+                "height": 111
+            },
+            "expected_text": [
+                "Jugar"
+            ]
+        },
+        {
+            "region": {
+                "left": 2924,
+                "top": 113,
+                "width": 288,
+                "height": 109
+            },
+            "expected_text": [
+                "Objetivos"
+            ]
+        }
+    ],
+    "menu_partido_submenu_estrategia_pre_partido": [
+        {
+            "region": {
+                "left": 42,
+                "top": 56,
+                "width": 629,
+                "height": 921
+            },
+            "expected_text": [
+                "Equipo",
+                "Selección autom.",
+                "Roles en el partido",
+                "Ayuda en partidos",
+                "Editar dorsal",
+                "Opciones de equipo base",
+                "Lista de estrategias"
+            ]
+        }
+    ],
+    "partido_on_estadio_sel": [
+        {
+            "region": {
+                "left": 1053,
+                "top": 43,
+                "width": 1836,
+                "height": 222
+            },
+            "expected_text": [
+                "Estadio",
+                "Siguiente"
+            ]
+        }
+    ],
+    "partido_on_uniforme_sel": [
+        {
+            "region": {
+                "left": 822,
+                "top": 28,
+                "width": 2856,
+                "height": 225
+            },
+            "expected_text": [
+                "Uniforme local",
+                "Uniforme visitante",
+                "Siguiente"
+            ]
+        }
+    ],
+    "partido_on_estrategia_sel": [
+        {
+            "region": {
+                "left": 32,
+                "top": 30,
+                "width": 3646,
+                "height": 201
+            },
+            "expected_text": [
+                "Atrás",
+                "Estrategia",
+                "Jugar"
+            ]
+        }
+    ],
+    "partido_off_puntos_ganados": [
+        {
+            "region": {
+                "left": 120,
+                "top": 105,
+                "width": 1589,
+                "height": 175
+            },
+            "expected_text": [
+                "Has ganado puntos de eventos"
+            ]
+        }
+    ],
+    "partido_off_recompensa2": [
+        {
+            "region": {
+                "left": 695,
+                "top": 1109,
+                "width": 710,
+                "height": 92
+            },
+            "expected_text": [
+                "Recompensa de evento"
+            ]
+        }
+    ],
+    "partido_off_recompensa3": [
+        {
+            "region": {
+                "left": 191,
+                "top": 801,
+                "width": 1634,
+                "height": 168
+            },
+            "expected_text": [
+                "Añadido a bandeja de entrada"
+            ]
+        },
+        {
+            "region": {
+                "left": 804,
+                "top": 1063,
+                "width": 449,
+                "height": 73
+            },
+            "expected_text": [
+                "puntos de Efootball"
+            ]
+        }
+    ],
+    "partido_on_descanso": [
+        {
+            "region": {
+                "left": 38,
+                "top": 31,
+                "width": 2748,
+                "height": 110
+            },
+            "expected_text": [
+                "Mejores jugadas",
+                "Estrategia",
+                "Siguiente"
+            ]
+        }
+    ],
+    "partido_on_final": [
+        {
+            "region": {
+                "left": 39,
+                "top": 12,
+                "width": 395,
+                "height": 56
+            },
+            "expected_text": [
+                "Final del partido"
+            ]
+        }
+    ],
+    "partido_on_final_pase": [
+        {
+            "region": {
+                "left": 43,
+                "top": 46,
+                "width": 998,
+                "height": 171
+            },
+            "expected_text": [
+                "Pase de partido"
+            ]
+        }
+    ],
+    "partido_on_final_recompensa1": [
+        {
+            "region": {
+                "left": 260,
+                "top": 803,
+                "width": 1640,
+                "height": 210
+            },
+            "expected_text": [
+                "Añadido a bandeja de entrada"
+            ]
+        }
+    ],
+    "menu_miequipo_jugadores_sel": [
+        {
+            "region": {
+                "left": 73,
+                "top": 51,
+                "width": 693,
+                "height": 160
+            },
+            "expected_text": [
+                "Mi equipo"
+            ]
+        }
+    ]
+}

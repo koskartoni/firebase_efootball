@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6cfbc07b-c343-470c-a7c3-81146ce48bbb" name="Changes" comment="Pruebas de refinamiento" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;raksomg&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/koskartoni/efootball",
+    "accountId": "273e8e4d-a0db-45f5-8cbe-90d7df0ffedd"
+  }
+}]]></component>
+  <component name="InvalidFacetManager">
+    <ignored-facets>
+      <facet id="efootball_automation_mejorado_20250403_022745/invalid/Python facet" />
+    </ignored-facets>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2vDdZGRpxHdNFQj8ckNeX2tzkLu" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.screen_recognizer.executor&quot;: &quot;Run&quot;,
+    &quot;Python.screen_tester_gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.template_manager_gui.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/koska/OneDrive/Documentos/DOCUMENTOS_OSKAR/efootball_automation_mejorado_20250403_022745&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\koska\OneDrive\Documentos\DOCUMENTOS_OSKAR\efootball_automation_mejorado_20250403_022745\config" />
+      <recent name="C:\Users\koska\OneDrive\Documentos\DOCUMENTOS_OSKAR\efootball_automation_mejorado_20250403_022745\src\config" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.25659.43" />
+        <option value="bundled-python-sdk-181015f7ab06-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.25659.43" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6cfbc07b-c343-470c-a7c3-81146ce48bbb" name="Changes" comment="" />
+      <created>1743683631608</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743683631608</updated>
+      <workItem from="1743683632701" duration="1997000" />
+      <workItem from="1743689022618" duration="107000" />
+      <workItem from="1743689142938" duration="4508000" />
+      <workItem from="1743696307340" duration="8605000" />
+      <workItem from="1743765226714" duration="977000" />
+      <workItem from="1743766421848" duration="10318000" />
+      <workItem from="1743784511754" duration="3000" />
+      <workItem from="1743784868675" duration="3869000" />
+      <workItem from="1743929795195" duration="2986000" />
+      <workItem from="1744044023983" duration="1244000" />
+      <workItem from="1744134827323" duration="5005000" />
+      <workItem from="1744284014535" duration="7963000" />
+      <workItem from="1744450455950" duration="52000" />
+    </task>
+    <task id="LOCAL-00001" summary="Programa inicial">
+      <option name="closed" value="true" />
+      <created>1743692813296</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743692813296</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Detección de pantalla implementada y probada con un exito del 70%. Se probará ocr">
+      <option name="closed" value="true" />
+      <created>1743703936330</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743703936330</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Detección de pantalla implementada y probada con un exito del 70%. Se probará ocr">
+      <option name="closed" value="true" />
+      <created>1743766429313</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743766429313</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Detección de pantalla implementada y probada con un exito del 70%. Se probará ocr">
+      <option name="closed" value="true" />
+      <created>1743766465150</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743766465150</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Readme actualizado">
+      <option name="closed" value="true" />
+      <created>1743767208099</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743767208099</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Nueva funcion de template donde capturamos y reasignamos zonas ocr de forma mas facil con un combobox">
+      <option name="closed" value="true" />
+      <created>1743788751904</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743788751904</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Nueva funcion de template donde capturamos y reasignamos zonas ocr de forma mas facil con un combobox. Ampliado programa con test en modo real para detectar pantallas">
+      <option name="closed" value="true" />
+      <created>1744286080248</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744286080248</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Pruebas de refinamiento">
+      <option name="closed" value="true" />
+      <created>1744314885549</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744314885549</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Programa inicial" />
+    <MESSAGE value="Detección de pantalla implementada y probada con un exito del 70%. Se probará ocr" />
+    <MESSAGE value="Readme actualizado" />
+    <MESSAGE value="Nueva funcion de template donde capturamos y reasignamos zonas ocr de forma mas facil con un combobox" />
+    <MESSAGE value="Nueva funcion de template donde capturamos y reasignamos zonas ocr de forma mas facil con un combobox. Ampliado programa con test en modo real para detectar pantallas" />
+    <MESSAGE value="Pruebas de refinamiento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pruebas de refinamiento" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/efootball_automation_mejorado_20250403_022745$screen_recognizer.coverage" NAME="screen_recognizer Coverage Results" MODIFIED="1744136037704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/efootball_automation_mejorado_20250403_022745$template_manager_gui.coverage" NAME="template_manager_gui Coverage Results" MODIFIED="1744292159728" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/efootball_automation_mejorado_20250403_022745$screen_tester_gui.coverage" NAME="screen_tester_gui Coverage Results" MODIFIED="1744295685768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/efootball_automation_mejorado_20250403_022745$main.coverage" NAME="main Coverage Results" MODIFIED="1743683772621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+  </component>
+</project>

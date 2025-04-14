@@ -1,0 +1,199 @@
+{
+    "pantalla_bienvenida": [
+        "pantalla_bienvenida_20250412_204658.png",
+        "pantalla_bienvenida_20250413_170452.png"
+    ],
+    "menu_home_sel": [
+        "menu_home_sel_20250412_205129.png",
+        "menu_home_sel_20250413_172234.png"
+    ],
+    "menu_misiones_sel": [
+        "menu_misiones_sel_20250412_205404.png"
+    ],
+    "menu_tienda_sel": [
+        "menu_tienda_sel_20250412_205624.png"
+    ],
+    "menu_extras_sel": [
+        "menu_extras_sel_20250412_205734.png"
+    ],
+    "bonus_inicio_sesion": [
+        "bonus_inicio_sesion_20250413_102606.png"
+    ],
+    "menu_home_partido_sel": [
+        "menu_home_partido_sel_20250413_102753.png"
+    ],
+    "menu_home_estrategia_sel": [
+        "menu_home_estrategia_sel_20250413_102846.png"
+    ],
+    "menu_home__miequipo_sel": [
+        "menu_home__miequipo_sel_20250413_102933.png"
+    ],
+    "menu_home_contrato_sel": [
+        "menu_home_contrato_sel_20250413_103017.png"
+    ],
+    "menu_home_premijuego_sel": [
+        "menu_home_premijuego_sel_20250413_103053.png"
+    ],
+    "menu_home_salir": [
+        "menu_home_salir_20250413_103135.png"
+    ],
+    "menu_contrato_jugadores_especiales_sel": [
+        "menu_contrato_jugadores_especiales_sel_20250413_103551.png"
+    ],
+    "menu_contrato_packs_sel": [
+        "menu_contrato_packs_sel_20250413_103738.png"
+    ],
+    "menu_contrato_boletos_sel": [
+        "menu_contrato_boletos_sel_20250413_103852.png"
+    ],
+    "menu_contrato_jugadores_normales_sel": [
+        "menu_contrato_jugadores_normales_sel_20250413_104011.png"
+    ],
+    "menu_contrato_directores": [
+        "menu_contrato_directores_20250413_104103.png"
+    ],
+    "menu_contrato_jugadoresNormales_lista": [
+        "menu_contrato_jugadoresNormales_lista_20250413_104826.png"
+    ],
+    "menu_contrato_jugadoresNormales_lista_raquel_sel": [
+        "menu_contrato_jugadoresNormales_lista_raquel_sel_20250413_105000.png"
+    ],
+    "menu_contrato_raquel_fichar": [
+        "menu_contrato_raquel_fichar_20250413_111822.png"
+    ],
+    "menu_contrato_raquel_confirmar_fichar_cancelar_sel": [
+        "menu_contrato_raquel_confirmar_fichar_cancelar_sel_20250413_111952.png"
+    ],
+    "menu_contrato_raquel_confirmar_fichar_GP_sel": [
+        "menu_contrato_raquel_confirmar_fichar_GP_sel_20250413_112037.png"
+    ],
+    "menu_contrato_raquel_comprado": [
+        "menu_contrato_raquel_comprado_20250413_112145.png"
+    ],
+    "menu_contrato_raquel_confirmar_fichado": [
+        "menu_contrato_raquel_confirmar_fichado_20250413_112227.png"
+    ],
+    "submenu_contrato_jugadores_normales_ordenar": [
+        "submenu_contrato_jugadores_normales_ordenar_20250413_112407.png"
+    ],
+    "submenu_contrato_ordenar_precio_sel": [
+        "submenu_contrato_ordenar_precio_sel_20250413_112505.png"
+    ],
+    "submenu_contrato_jugadores_valor_sel": [
+        "submenu_contrato_jugadores_valor_sel_20250413_112630.png"
+    ],
+    "submenu_contrato_jugadores_valoracion_sel": [
+        "submenu_contrato_jugadores_valoracion_sel_20250413_112722.png"
+    ],
+    "submenu_contrato_jugadores_posicion_sel": [
+        "submenu_contrato_jugadores_posicion_sel_20250413_112809.png"
+    ],
+    "menu_miequipo_jugadores_sel": [
+        "menu_miequipo_jugadores_sel_20250413_113009.png"
+    ],
+    "menu_miequipo_jugadores_lista_pos1_sel": [
+        "menu_miequipo_jugadores_lista_pos1_sel_20250413_113223.png"
+    ],
+    "menu_miequipo_jugadores_pos2_sel": [
+        "menu_miequipo_jugadores_pos2_sel_20250413_113338.png"
+    ],
+    "menu_miequipo_jugadores_lista": [
+        "menu_miequipo_jugadores_lista_20250413_113432.png"
+    ],
+    "menu_miequipo_jugadores_raquel_sel": [
+        "menu_miequipo_jugadores_raquel_sel_20250413_113704.png"
+    ],
+    "menu_jugador_acciones_entrenamiento_sel": [
+        "menu_jugador_acciones_entrenamiento_sel_20250413_113854.png"
+    ],
+    "menu_jugador_acciones_progresion_sel": [
+        "menu_jugador_acciones_progresion_sel_20250413_113946.png"
+    ],
+    "menu_jugador_acciones_habilidad_sel": [
+        "menu_jugador_acciones_habilidad_sel_20250413_114051.png"
+    ],
+    "menu_jugador_acciones_posicion_sel": [
+        "menu_jugador_acciones_posicion_sel_20250413_114142.png"
+    ],
+    "menu_jugador_acciones_transferencia_sel": [
+        "menu_jugador_acciones_transferencia_sel_20250413_114227.png"
+    ],
+    "menu_jugador_acciones_bloquear": [
+        "menu_jugador_acciones_bloquear_20250413_114344.png"
+    ],
+    "menu_jugador_acciones_despedir": [
+        "menu_jugador_acciones_despedir_20250413_114412.png"
+    ],
+    "menu_jugador_accione_habilidad_vacia": [
+        "menu_jugador_accione_habilidad_vacia_20250413_114515.png"
+    ],
+    "menu_jugador_acciones_habilidad_menuentrenar_cancelar_sel": [
+        "menu_jugador_acciones_habilidad_menuentrenar_cancelar_sel_20250413_114727.png"
+    ],
+    "menu_jugador_acciones_submenu_entrenar_x1_sel": [
+        "menu_jugador_acciones_submenu_entrenar_x1_sel_20250413_114857.png"
+    ],
+    "menu_jugador_acciones_habilidad_entrenada": [
+        "menu_jugador_acciones_habilidad_entrenada_20250413_115020.png"
+    ],
+    "menu_jugador_acciones_habilidad_existe": [
+        "menu_jugador_acciones_habilidad_existe_20250413_115118.png"
+    ],
+    "menu_partido_torneo_sel": [
+        "menu_partido_torneo_sel_20250413_115330.png"
+    ],
+    "menu_partido_eventos_sel": [
+        "menu_partido_eventos_sel_20250413_115422.png"
+    ],
+    "menu_partido_eventos_JcJ_sel": [
+        "menu_partido_eventos_JcJ_sel_20250413_115516.png"
+    ],
+    "menu_partido_eventos_IA_sel": [
+        "menu_partido_eventos_IA_sel_20250413_115603.png"
+    ],
+    "menu_partido_eventos_ia_partido1_sel": [
+        "menu_partido_eventos_ia_partido1_sel_20250413_115703.png"
+    ],
+    "menu_partido_eventos_ia_partido2_sel": [
+        "menu_partido_eventos_ia_partido2_sel_20250413_115804.png"
+    ],
+    "menu_partido_eventos_ia_partido": [
+        "menu_partido_eventos_ia_partido_20250413_120019.png"
+    ],
+    "menu_partido_submenu_estrategia_pre_partido": [
+        "menu_partido_submenu_estrategia_pre_partido_20250413_120432.png"
+    ],
+    "partido_on_estadio_sel": [
+        "partido_on_estadio_sel_20250413_120648.png"
+    ],
+    "partido_on_uniforme_sel": [
+        "partido_on_uniforme_sel_20250413_120745.png"
+    ],
+    "partido_on_estrategia_sel": [
+        "partido_on_estrategia_sel_20250413_120846.png"
+    ],
+    "partido_on_descanso": [
+        "partido_on_descanso_20250413_121818.png"
+    ],
+    "partido_on_final": [
+        "partido_on_final_20250413_122605.png"
+    ],
+    "fpartido_on_final_siguiente": [
+        "fpartido_on_final_siguiente_20250413_122701.png"
+    ],
+    "partido_on_final_recompensa1": [
+        "partido_on_final_recompensa1_20250413_122739.png"
+    ],
+    "partido_on_final_pase": [
+        "partido_on_final_pase_20250413_122843.png"
+    ],
+    "partido_off_puntos_ganados": [
+        "partido_off_puntos_ganados_20250413_122931.png"
+    ],
+    "partido_off_recompensa2": [
+        "partido_off_recompensa2_20250413_123118.png"
+    ],
+    "partido_off_recompensa3": [
+        "partido_off_recompensa3_20250413_123237.png"
+    ]
+}

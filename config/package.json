@@ -1,0 +1,7 @@
+{
+    "menu_principal_home_seleccionado": {"left": 50, "top": 50, "width": 1000, "height": 150},
+    "menu_misiones_selec": {"left": 50, "top": 50, "width": 1000, "height": 150},
+    "menu_tienda_selec": {"left": 50, "top": 50, "width": 1000, "height": 150},
+    "menu_extras_selec": {"left": 50, "top": 50, "width": 1000, "height": 150},
+    "pantalla_bienvenida": {"left": 700, "top": 800, "width": 500, "height": 100}
+}

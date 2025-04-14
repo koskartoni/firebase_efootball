@@ -1,0 +1,14 @@
+{
+    "pantalla_bienvenida": {
+        "left": 1439,
+        "top": 1934,
+        "width": 960,
+        "height": 166
+    },
+    "menu_home_partido": {
+        "left": 223,
+        "top": 1264,
+        "width": 2700,
+        "height": 516
+    }
+}

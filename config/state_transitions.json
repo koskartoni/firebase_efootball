@@ -1,0 +1,264 @@
+{
+    "pantalla_bienvenida": [
+        "bonus_inicio_sesion",
+        "menu_home_sel"
+    ],
+    "bonus_inicio_sesion": [
+        "menu_home_sel"
+    ],
+    "menu_home_sel": [
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_home_partido_sel",
+        "menu_home_estrategia_sel",
+        "menu_home__miequipo_sel",
+        "menu_home_contrato_sel",
+        "menu_home_premijuego_sel",
+        "menu_home_salir",
+        "menu_tienda_sel"
+    ],
+    "menu_misiones_sel": [
+        "menu_home_sel",
+        "menu_tienda_sel",
+        "menu_extras_sel"
+    ],
+    "menu_tienda_sel": [
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_home_sel"
+    ],
+    "menu_extras_sel": [
+        "menu_tienda_sel",
+        "menu_home_sel",
+        "menu_misiones_sel"
+    ],
+    "menu_home_partido_sel": [
+        "menu_home_sel",
+        "menu_home_estrategia_sel",
+        "menu_partido_torneo_sel",
+        "menu_partido_eventos_sel",
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_tienda_sel",
+        "menu_home__miequipo_sel",
+        "menu_home_contrato_sel",
+        "menu_home_premijuego_sel",
+        "menu_home_salir"
+    ],
+    "menu_home_estrategia_sel": [
+        "menu_home_partido_sel",
+        "menu_home_sel",
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_tienda_sel",
+        "menu_home__miequipo_sel",
+        "menu_home_contrato_sel",
+        "menu_home_premijuego_sel",
+        "menu_home_salir"
+    ],
+    "menu_home__miequipo_sel": [
+        "menu_home_partido_sel",
+        "menu_home_estrategia_sel",
+        "menu_home_sel",
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_tienda_sel",
+        "menu_home_contrato_sel",
+        "menu_home_premijuego_sel",
+        "menu_home_salir"
+    ],
+    "menu_home_contrato_sel": [
+        "menu_home_partido_sel",
+        "menu_home_estrategia_sel",
+        "menu_home_sel",
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_tienda_sel",
+        "menu_home__miequipo_sel",
+        "menu_home_premijuego_sel",
+        "menu_home_salir"
+    ],
+    "menu_home_premijuego_sel": [
+        "menu_home_contrato_sel",
+        "menu_home_partido_sel",
+        "menu_home_estrategia_sel",
+        "menu_home_sel",
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_tienda_sel",
+        "menu_home__miequipo_sel",
+        "menu_home_premijuego_sel",
+        "menu_home_salir"
+    ],
+    "menu_home_salir": [
+        "menu_home_partido_sel",
+        "menu_home_estrategia_sel",
+        "menu_home_sel",
+        "menu_misiones_sel",
+        "menu_extras_sel",
+        "menu_tienda_sel",
+        "menu_home__miequipo_sel",
+        "menu_home_premijuego_sel",
+        "menu_home_contrato_sel"
+    ],
+    "menu_contrato_jugadores_especiales_sel": [
+        "menu_home_contrato_sel",
+        "menu_contrato_packs_sel",
+        "menu_contrato_boletos_sel",
+        "menu_contrato_jugadores_normales_sel",
+        "menu_contrato_directores"
+    ],
+    "menu_contrato_packs_sel": [
+        "menu_home_contrato_sel",
+        "menu_contrato_jugadores_especiales_sel",
+        "menu_contrato_boletos_sel",
+        "menu_contrato_jugadores_normales_sel",
+        "menu_contrato_directores"
+    ],
+    "menu_contrato_boletos_sel": [
+         "menu_home_contrato_sel",
+        "menu_contrato_jugadores_especiales_sel",
+        "menu_contrato_packs_sel",
+        "menu_contrato_jugadores_normales_sel",
+        "menu_contrato_directores"
+    ],
+    "menu_contrato_jugadores_normales_sel": [
+        "menu_home_contrato_sel",
+        "menu_contrato_jugadores_especiales_sel",
+        "menu_contrato_packs_sel",
+        "menu_contrato_directores",
+        "menu_contrato_boletos_sel",
+        "menu_contrato_jugadoresNormales_lista"
+    ],
+    "menu_contrato_directores": [
+        "menu_contrato_jugadores_normales_sel",
+        "menu_home_contrato_sel",
+        "menu_contrato_jugadores_especiales_sel",
+        "menu_contrato_packs_sel",
+        "menu_contrato_boletos_sel"
+    ],
+    "menu_contrato_jugadoresNormales_lista": [
+        "menu_contrato_jugadores_normales_sel",
+        "menu_contrato_jugadoresNormales_lista_raquel_sel",
+        "submenu_contrato_jugadores_normales_ordenar"
+    ],
+    "menu_contrato_jugadoresNormales_lista_raquel_sel": [
+        "menu_contrato_jugadoresNormales_lista",
+        "menu_contrato_raquel_fichar"
+    ],
+    "menu_contrato_raquel_fichar": [
+        "menu_contrato_jugadoresNormales_lista",
+        "menu_contrato_raquel_confirmar_fichar_GP_sel",
+        "menu_contrato_raquel_confirmar_fichar_cancelar_sel"
+    ],
+    "menu_contrato_raquel_confirmar_fichar_GP_sel": [
+        "menu_contrato_raquel_fichar",
+        "menu_contrato_raquel_comprado"
+    ],
+    "menu_contrato_raquel_confirmar_fichar_cancelar_sel": [
+        "menu_contrato_raquel_fichar"
+    ],
+    "menu_contrato_raquel_comprado": [
+        "menu_contrato_raquel_confirmar_fichado"
+    ],
+    "menu_contrato_raquel_confirmar_fichado": [
+        "menu_contrato_jugadoresNormales_lista"
+    ],
+    "menu_miequipo_jugadores_sel": [
+        "menu_home__miequipo_sel",
+        "menu_miequipo_directores_sel",
+        "menu_miequipo_jugadores_lista"
+    ],
+    "menu_miequipo_jugadores_lista": [
+        "menu_miequipo_jugadores_sel",
+        "menu_miequipo_jugadores_lista_pos1_sel",
+        "menu_miequipo_jugadores_raquel_sel"
+    ],
+    "menu_miequipo_jugadores_raquel_sel": [
+        "menu_miequipo_jugadores_lista",
+        "menu_jugador_acciones_entrenamiento_sel"
+    ],
+    "menu_jugador_acciones_entrenamiento_sel": [
+        "menu_miequipo_jugadores_raquel_sel",
+        "menu_jugador_acciones_progresion_sel",
+        "menu_jugador_entrenamiento_detalle"
+    ],
+    "menu_jugador_acciones_progresion_sel": [
+        "menu_jugador_acciones_entrenamiento_sel",
+        "menu_jugador_acciones_habilidad_sel",
+        "menu_jugador_progresion_detalle"
+    ],
+    "menu_jugador_acciones_habilidad_sel": [
+        "menu_jugador_acciones_progresion_sel",
+        "menu_jugador_acciones_posicion_sel",
+        "menu_jugador_accione_habilidad_vacia"
+    ],
+    "menu_jugador_acciones_despedir": [
+        "menu_jugador_acciones_bloquear",
+        "menu_miequipo_jugadores_raquel_sel",
+        "popup_confirmar_despedir"
+    ],
+    "menu_partido_eventos_sel": [
+        "menu_home_partido_sel",
+        "menu_partido_torneo_sel",
+        "menu_partido_eventos_JcJ_sel",
+        "menu_partido_eventos_IA_sel",
+        "menu_partido_eventos_ia_partido1_sel"
+    ],
+    "menu_partido_eventos_IA_sel": [
+        "menu_partido_eventos_sel",
+        "menu_partido_eventos_JcJ_sel",
+        "menu_partido_eventos_ia_partido1_sel"
+    ],
+    "menu_partido_eventos_JcJ_sel": [
+        "menu_partido_eventos_sel",
+        "menu_partido_eventos_IA_sel",
+        "menu_partido_eventos_jcj_partido1_sel"
+    ],
+    "menu_partido_eventos_ia_partido1_sel": [
+        "menu_partido_eventos_IA_sel",
+        "menu_partido_eventos_ia_partido"
+    ],
+    "menu_partido_eventos_ia_partido": [
+        "menu_partido_eventos_ia_partido1_sel",
+        "partido_on_estrategia_sel"
+    ],
+    "partido_on_estrategia_sel": [
+        "menu_partido_eventos_ia_partido",
+        "partido_on_uniforme_sel"
+    ],
+    "partido_on_uniforme_sel": [
+        "partido_on_estrategia_sel",
+        "partido_on_estadio_sel"
+    ],
+    "partido_on_estadio_sel": [
+        "partido_on_uniforme_sel",
+        "partido_jugando"
+    ],
+    "partido_on_descanso": [
+        "partido_on_estrategia_descanso"
+    ],
+    "partido_on_final": [
+        "fpartido_on_final_siguiente"
+    ],
+    "fpartido_on_final_siguiente": [
+        "partido_on_final_pase",
+        "partido_on_final_recompensa1"
+    ],
+    "partido_on_final_pase": [
+        "partido_on_final_recompensa1"
+    ],
+    "partido_on_final_recompensa1": [
+        "partido_off_puntos_ganados"
+    ],
+    "partido_off_puntos_ganados": [
+        "partido_off_recompensa2"
+    ],
+    "partido_off_recompensa2": [
+        "partido_off_recompensa3"
+    ],
+    "partido_off_recompensa3": [
+        "menu_partido_eventos_IA_sel",
+        "menu_home_sel"
+    ]
+}

@@ -1,0 +1,80 @@
+{
+    "pantalla_bienvenida": {
+        "left": 1359,
+        "top": 1689,
+        "width": 1093,
+        "height": 441
+    },
+    "menu_home_sel": {
+        "left": 760,
+        "top": 58,
+        "width": 733,
+        "height": 227
+    },
+    "menu_misiones_sel": {
+        "left": 1314,
+        "top": 51,
+        "width": 649,
+        "height": 235
+    },
+    "menu_partido_torneo_sel": {
+        "left": 84,
+        "top": 1483,
+        "width": 1061,
+        "height": 659
+    },
+    "menu_partido_eventos_IA_sel": {
+        "left": 1124,
+        "top": 58,
+        "width": 1668,
+        "height": 243
+    },
+    "menu_home_premijuego_sel": {
+        "left": 2891,
+        "top": 1180,
+        "width": 760,
+        "height": 678
+    },
+    "menu_extras_sel": {
+        "left": 2399,
+        "top": 37,
+        "width": 750,
+        "height": 253
+    },
+    "menu_tienda_sel": {
+        "left": 1884,
+        "top": 54,
+        "width": 643,
+        "height": 243
+    },
+    "menu_home_partido_sel": {
+        "left": 192,
+        "top": 1159,
+        "width": 745,
+        "height": 725
+    },
+    "menu_home_estrategia_sel": {
+        "left": 853,
+        "top": 1196,
+        "width": 787,
+        "height": 638
+    },
+    "menu_home__miequipo_sel": {
+        "left": 1728,
+        "top": 1324,
+        "width": 389,
+        "height": 500
+    },
+    "menu_home_contrato_sel": {
+        "left": 2411,
+        "top": 1320,
+        "width": 369,
+        "height": 490
+    },
+    "menu_home_salir": {
+        "left": 3070,
+        "top": 1351,
+        "width": 406,
+        "height": 472
+    }
+}
