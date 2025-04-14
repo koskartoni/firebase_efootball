@@ -1,5 +1,5 @@
 # --- START OF FILE screen_tester_gui ---
-
+import copy
 import os
 import json
 import datetime
@@ -12,7 +12,7 @@ import cv2
 import numpy as np # Necesario para np.array en tk_select_roi
 from PIL import Image, ImageTk # Solo para tk_select_roi si se mantiene aquí
 from tkinter import font
-import time
+import time, math
 import logging
 import subprocess
 import sys
@@ -41,6 +41,8 @@ MIN_CANVAS_HEIGHT = 200
 LOG_FILE_TESTER = os.path.join(PROJECT_DIR, "logs", "tester_log.log") # Guardar en subcarpeta logs
 os.makedirs(os.path.dirname(LOG_FILE_TESTER), exist_ok=True)
 
+CONFIDENCE_COLOR_DEFAULT = "lime"
+CONFIDENCE_COLOR_ERROR = "red"
 
 # --- Configuración del Logging ---
 # Configuración principal (igual que antes, pero con la nueva ruta)
@@ -237,13 +239,15 @@ class ScreenTesterGUI(tk.Tk):
    def __init__(self):
        super().__init__()
        self.title("Tester Interactivo - Screen Recognizer")
+       self.configure(background="#333333")  # Color de fondo oscuro
        self.minsize(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT)
 
        # No necesita ocr_regions aquí, usa las del recognizer indirectamente
        # self.ocr_regions = []
-       # self.ocr_region_rects = [] # No hay canvas de preview aquí
+
        self.current_template_name = None # Usado internamente al corregir/definir ROI
        self.last_recognition_result = None # Almacena el resultado completo del último test
+       self.preview_canvas = None # Canvas para dibujar en la imagen de preview
 
        # Inicializar el Recognizer (podría hacerse configurable)
        self.recognizer = ScreenRecognizer(monitor=1, threshold=0.75, ocr_fallback_threshold=0.65)
@@ -266,18 +270,22 @@ class ScreenTesterGUI(tk.Tk):
        style.configure('.', font=self.default_font, padding=(3, 1))
        style.configure('TLabelframe.Label', font=(self.default_font.actual()['family'], DEFAULT_FONT_SIZE, 'bold'))
        # Estilos específicos para botones y etiquetas de resultado
-       style.configure("Result.TLabel", font=(self.default_font.actual()['family'], DEFAULT_FONT_SIZE + 1, 'bold'))
+       style.configure("Result.TLabel", font=(self.default_font.actual()['family'], DEFAULT_FONT_SIZE + 1, 'bold'),background="#333333")
        style.configure("Confirm.TButton", foreground="green", font=self.default_font)
        style.configure("Deny.TButton", foreground="red", font=self.default_font)
        style.configure("Action.TButton", padding=(5, 3)) # Padding estándar para otros botones
        style.configure("Treeview.Heading", font=(self.default_font.actual()['family'], DEFAULT_FONT_SIZE, 'bold'))
+       style.configure("TCheckbutton", background="#333333")
+       style.configure("TFrame", background="#333333")
+       style.configure("TLabel", background="#333333", foreground='white')
+       style.configure("TLabelframe", background="#333333", foreground='white')
 
 
    def create_widgets(self):
        """Crea todos los widgets de la interfaz."""
-       self.grid_rowconfigure(3, weight=1) # Fila OCR/Corrección se expande
+       self.grid_rowconfigure(4, weight=1) # Fila OCR/Corrección se expande
        self.grid_columnconfigure(0, weight=1)
-
+       self.create_preview_frame()
        self.create_control_frame()
        self.create_result_frame()
        self.create_correction_frame() # Se crea pero no se muestra inicialmente
@@ -285,7 +293,21 @@ class ScreenTesterGUI(tk.Tk):
        self.create_status_label()
 
 
+   def create_preview_frame(self):
+       """Crea el frame que contiene el Canvas para dibujar el preview."""
+       self.preview_frame = ttk.LabelFrame(self, text="Preview Captura", padding=(10, 5))
+       self.preview_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+       self.preview_frame.grid_columnconfigure(0, weight=1)
+       self.preview_frame.grid_rowconfigure(0, weight=1)
+       self.preview_canvas = tk.Canvas(self.preview_frame, bg="gray", highlightthickness=0)
+       self.preview_canvas.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
+
+
    def create_control_frame(self):
+       self.ocr_threshold = tk.DoubleVar(value=0.65)
+       self.template_threshold = tk.DoubleVar(value=0.75)
+       self.debug_log_var = tk.BooleanVar(value=False)
+
        """Crea el frame con los botones de control principales."""
        control_frame = ttk.LabelFrame(self, text="Control", padding=(10, 5))
        control_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
@@ -297,6 +319,28 @@ class ScreenTesterGUI(tk.Tk):
        self.test_button.pack(side="left", padx=10)
        self.reload_button = ttk.Button(button_container, text="Recargar Datos Reconocedor", command=self.reload_recognizer_data, style="Action.TButton")
        self.reload_button.pack(side="left", padx=10)
+
+       # --- Checkbox Debug Log ---
+       self.debug_checkbox = ttk.Checkbutton(
+           control_frame,
+           text="Debug Log",
+           variable=self.debug_log_var,
+           command=self.toggle_debug_logging
+       )
+       self.debug_checkbox.pack(pady=5)
+
+       # --- Slider de Umbral Template ---
+       ttk.Label(control_frame, text="Umbral Template:").pack(pady=(5, 0))
+       self.template_threshold_slider = tk.Scale(control_frame, from_=0.1, to=1.0, resolution=0.01, orient="horizontal", variable=self.template_threshold)
+       self.template_threshold_slider.pack()
+
+       # --- Slider de Umbral OCR ---
+       ttk.Label(control_frame, text="Umbral OCR:").pack(pady=(5, 0))
+       self.ocr_threshold_slider = tk.Scale(control_frame, from_=0.1, to=1.0, resolution=0.01, orient="horizontal", variable=self.ocr_threshold)
+       self.ocr_threshold_slider.pack()
+
+       self.apply_thresholds_button = ttk.Button(control_frame, text="Aplicar Umbrales", command=self.apply_thresholds)
+       self.apply_thresholds_button.pack(pady=5)
 
 
    def create_result_frame(self):
@@ -448,6 +492,21 @@ class ScreenTesterGUI(tk.Tk):
             logging.error("Intento de recarga fallido: método reload_data() no encontrado en ScreenRecognizer.")
             messagebox.showerror("Error de Código", "La clase ScreenRecognizer parece no tener el método 'reload_data'.")
             self.status_message("Error al recargar: método no encontrado.")
+       except RuntimeError as re:
+           if "dictionary changed size during iteration" in str(re):
+               logging.error(f"Error de tamaño de diccionario al recargar datos: {re}. Esto sugiere que las claves del diccionario config.json han sido modificadas manualmente de forma incorrecta.")
+               messagebox.showerror(
+                   "Error de Configuración",
+                   "Se ha detectado una modificación incorrecta en las claves del archivo config.json.\n"
+                   "Por favor, revise el archivo y asegúrese de que las claves estén bien formadas y sin duplicados.\n"
+                   "Si ha editado manualmente el archivo, es posible que deba revertir los cambios o corregirlos.\n"
+                   f"Detalle del error: {re}"
+               )
+               self.status_message("Error al recargar: claves config.json modificadas.")
+           else:
+               logging.error(f"Error inesperado al recargar datos: {re}", exc_info=True)
+               messagebox.showerror("Error Inesperado", f"Ocurrió un error al recargar los datos:\n{re}")
+               self.status_message("Error al recargar datos.")
        except Exception as e:
             logging.error(f"Error inesperado al recargar datos: {e}", exc_info=True)
             messagebox.showerror("Error Inesperado", f"Ocurrió un error al recargar los datos:\n{e}")
@@ -495,6 +554,7 @@ class ScreenTesterGUI(tk.Tk):
        self.reset_ui_state() # Llama a la función que limpia y deshabilita
        self.test_button.config(state="disabled") # Deshabilitar botón de test también
        self.reload_button.config(state="disabled")
+       self.apply_thresholds_button.config(state="disabled")
        self.update_idletasks() # Forzar actualización visual
 
        start_time = time.time()
@@ -508,6 +568,7 @@ class ScreenTesterGUI(tk.Tk):
            # Habilitar botones de control de nuevo
            self.test_button.config(state="normal")
            self.reload_button.config(state="normal")
+           self.apply_thresholds_button.config(state="normal")
 
        end_time = time.time()
        # Usar el tiempo del resultado si está disponible, si no, calcularlo
@@ -521,6 +582,10 @@ class ScreenTesterGUI(tk.Tk):
        time_str = f"{detection_time:.3f} seg"
 
        # Actualizar etiquetas de resultado
+       self.update_preview_image(result)
+
+
+
        self.method_var.set(method)
        self.state_var.set(state if state != 'unknown' else 'N/A')
        self.confidence_var.set(confidence_str)
@@ -1090,6 +1155,120 @@ class ScreenTesterGUI(tk.Tk):
        logging.info(f"Status GUI: {message}")
        self.status_label_var.set(message)
        self.update_idletasks() # Forzar actualización inmediata
+
+   def toggle_debug_logging(self):
+       """Cambia el nivel de log en tiempo de ejecución."""
+       if self.debug_log_var.get():
+           logging.getLogger().setLevel(logging.DEBUG)
+           logging.debug("Nivel de logging cambiado a DEBUG en GUI.")
+       else:
+           logging.getLogger().setLevel(logging.INFO)
+           logging.info("Nivel de logging cambiado a INFO en GUI.")
+
+   def apply_thresholds(self):
+       """Aplica los umbrales seleccionados a la instancia del recognizer."""
+       new_template_threshold = self.template_threshold.get()
+       new_ocr_threshold = self.ocr_threshold.get()
+       self.recognizer.threshold = new_template_threshold
+       self.recognizer.ocr_fallback_threshold = new_ocr_threshold
+       logging.info(f"Umbral de template actualizado a {new_template_threshold:.2f}.")
+       logging.info(f"Umbral de OCR actualizado a {new_ocr_threshold:.2f}.")
+       messagebox.showinfo("Umbrales Actualizados", f"Umbral de template: {new_template_threshold:.2f}\nUmbral de OCR: {new_ocr_threshold:.2f}")
+
+
+   def update_preview_image(self, result):
+       """Dibuja la imagen de preview en el canvas."""
+       # Borrar cualquier elemento previo en el canvas
+       self.preview_canvas.delete("all")
+
+       if result is None or result.get('screenshot') is None:
+           logging.warning("No se proporcionó captura de pantalla para el preview.")
+           self.status_message("No hay preview disponible.")
+           return
+
+       # Obtener la imagen del resultado
+       preview_image_cv = result['screenshot']
+
+       if preview_image_cv is None or preview_image_cv.size == 0:
+           logging.error("La captura de pantalla para el preview es inválida.")
+           self.status_message("Error en la captura de pantalla.")
+           return
+
+       try:
+           # Convertir a RGB y PIL
+           preview_image_rgb = cv2.cvtColor(preview_image_cv, cv2.COLOR_BGR2RGB)
+           preview_image_pil = Image.fromarray(preview_image_rgb)
+
+           # Redimensionar si es necesario
+           canvas_width = self.preview_canvas.winfo_width()
+           canvas_height = self.preview_canvas.winfo_height()
+
+           if canvas_width > 0 and canvas_height > 0:
+               preview_width, preview_height = preview_image_pil.size
+               if preview_width > canvas_width or preview_height > canvas_height:
+                   scale = min(canvas_width / preview_width, canvas_height / preview_height)
+                   new_width = int(preview_width * scale)
+                   new_height = int(preview_height * scale)
+                   preview_image_pil = preview_image_pil.resize((new_width, new_height), Image.LANCZOS)
+
+           # Convertir a ImageTk
+           self.preview_image_tk = ImageTk.PhotoImage(preview_image_pil)
+
+           # Dibujar en el canvas, centrado
+           x_offset = (canvas_width - self.preview_image_tk.width()) // 2 if canvas_width > self.preview_image_tk.width() else 0
+           y_offset = (canvas_height - self.preview_image_tk.height()) // 2 if canvas_height > self.preview_image_tk.height() else 0
+           self.preview_canvas.create_image(x_offset, y_offset, anchor=tk.NW, image=self.preview_image_tk)
+
+           # Dibujar rectángulos si hay resultados
+           if result.get('method') == 'template' and result.get('template_matches'):
+               matches = result['template_matches']
+               for match in matches:
+                    # Obtener datos del match
+                    template_name = match['name']
+                    rect = match['rectangle']
+                    confidence = match['confidence']
+                    # Calcular coords en la imagen de preview escalada
+                    left = int(rect['left'] * self.preview_image_tk.width() / preview_image_pil.width) + x_offset
+                    top = int(rect['top'] * self.preview_image_tk.height() / preview_image_pil.height) + y_offset
+                    width = int(rect['width'] * self.preview_image_tk.width() / preview_image_pil.width)
+                    height = int(rect['height'] * self.preview_image_tk.height() / preview_image_pil.height)
+                    # Determinar el color en función de la confianza
+                    color = CONFIDENCE_COLOR_DEFAULT if confidence >= self.recognizer.threshold else CONFIDENCE_COLOR_ERROR
+
+                    # Dibujar el rectángulo y la etiqueta
+                    self.preview_canvas.create_rectangle(left, top, left + width, top + height, outline=color, width=2)
+                    label_x, label_y = left, top - 15  # Encima del rectángulo
+                    if label_y < 0:
+                        label_y = top + height + 5
+                    self.preview_canvas.create_text(label_x, label_y, text=f"{template_name}: {confidence:.2f}", fill=color, anchor=tk.NW, font=("Arial", 8))
+           elif result.get('method') == 'ocr' and result.get('ocr_results'):
+               # Si hay resultados OCR, dibujar los rectángulos de las regiones
+               ocr_results = result['ocr_results']
+               for ocr_data in ocr_results.values():
+                   rect = ocr_data['region']
+                   extracted_text = ocr_data['text']
+                   # Calcular coords en la imagen de preview escalada
+                   left = int(rect['left'] * self.preview_image_tk.width() / preview_image_pil.width) + x_offset
+                   top = int(rect['top'] * self.preview_image_tk.height() / preview_image_pil.height) + y_offset
+                   width = int(rect['width'] * self.preview_image_tk.width() / preview_image_pil.width)
+                   height = int(rect['height'] * self.preview_image_tk.height() / preview_image_pil.height)
+                   # Dibujar el rectángulo
+                   rect_color = "light blue"  # Puedes ajustar el color aquí
+                   self.preview_canvas.create_rectangle(left, top, left + width, top + height, outline=rect_color, width=2)
+                   # --- Dibujar el texto extraído ---
+                   text_color = "black"  # Asegura buena legibilidad
+                   font_size = 8 # Ajustable
+                   text_x, text_y = left + 3, top - font_size - 2  # Ajusta la posición del texto
+                   if text_y < 0:
+                       text_y = top + height + 5
+
+                   # Crear el fondo para el texto
+                   self.preview_canvas.create_rectangle(text_x - 2, text_y - 2, text_x + len(extracted_text) * font_size // 2, text_y + font_size + 2, fill="lightyellow", outline="lightyellow")
+                   # Dibujar el texto
+                   self.preview_canvas.create_text(text_x, text_y, text=extracted_text, fill=text_color, anchor=tk.NW, font=("Arial", font_size))
+       except Exception as e:
+           logging.error(f"Error al dibujar imagen de preview: {e}", exc_info=True)
+
 
 
 if __name__ == "__main__":
