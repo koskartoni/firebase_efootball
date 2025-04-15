@@ -2177,3 +2177,33 @@ This probably means that Tcl wasn't installed properly.
 2025-04-15 14:05:32,367 - INFO - [screen_tester_gui.py:316] - Listo.
 2025-04-15 14:05:37,655 - INFO - [screen_tester_gui.py:673] - Solicitud de cierre de ventana...
 2025-04-15 14:05:39,211 - INFO - [screen_tester_gui.py:675] - ==================== Aplicación cerrada ====================
+2025-04-15 14:17:58,803 - INFO - [screen_tester_gui.py:77] - 
+==================== Iniciando Screen Tester GUI ====================
+2025-04-15 14:17:58,906 - INFO - [screen_tester_gui.py:94] - Inicializando la ventana principal de la GUI.
+2025-04-15 14:17:58,971 - INFO - [screen_recognizer.py:128] - Monitores detectados: 1
+2025-04-15 14:17:58,971 - INFO - [screen_recognizer.py:159] - Cargando/Recargando datos de reconocimiento...
+2025-04-15 14:17:58,973 - INFO - [screen_recognizer.py:190] - Cargando plantillas desde: C:\temp\Testing_autoefooball\images\4K (Resolución: 4K)
+2025-04-15 14:18:00,120 - INFO - [screen_recognizer.py:232] - Carga de plantillas completada. 67 cargadas, 0 errores (faltantes/corruptas).
+2025-04-15 14:18:00,120 - INFO - [screen_recognizer.py:165] - Datos cargados/recargados.
+2025-04-15 14:18:00,120 - INFO - [screen_tester_gui.py:130] - Instancia de ScreenRecognizer creada.
+2025-04-15 14:18:00,120 - INFO - [screen_tester_gui.py:169] - Usando tema ttk: 'clam'
+2025-04-15 14:18:00,469 - INFO - [screen_tester_gui.py:258] - Listo.
+2025-04-15 14:18:00,504 - INFO - [screen_tester_gui.py:157] - Inicialización de la GUI completada.
+2025-04-15 14:18:00,504 - INFO - [screen_tester_gui.py:258] - Listo.
+2025-04-15 14:18:02,592 - INFO - [screen_tester_gui.py:658] - Solicitud de cierre...
+2025-04-15 14:18:03,931 - INFO - [screen_tester_gui.py:660] - ==================== Aplicación cerrada ====================
+2025-04-15 14:25:06,418 - INFO - [screen_tester_gui.py:78] - 
+==================== Iniciando Screen Tester GUI ====================
+2025-04-15 14:25:06,518 - INFO - [screen_tester_gui.py:95] - Inicializando la ventana principal de la GUI.
+2025-04-15 14:25:06,588 - INFO - [screen_recognizer.py:128] - Monitores detectados: 1
+2025-04-15 14:25:06,588 - INFO - [screen_recognizer.py:159] - Cargando/Recargando datos de reconocimiento...
+2025-04-15 14:25:06,590 - INFO - [screen_recognizer.py:190] - Cargando plantillas desde: C:\temp\Testing_autoefooball\images\4K (Resolución: 4K)
+2025-04-15 14:25:07,739 - INFO - [screen_recognizer.py:232] - Carga de plantillas completada. 67 cargadas, 0 errores (faltantes/corruptas).
+2025-04-15 14:25:07,740 - INFO - [screen_recognizer.py:165] - Datos cargados/recargados.
+2025-04-15 14:25:07,740 - INFO - [screen_tester_gui.py:131] - Instancia de ScreenRecognizer creada.
+2025-04-15 14:25:07,740 - INFO - [screen_tester_gui.py:170] - Usando tema ttk: 'clam'
+2025-04-15 14:25:08,108 - INFO - [screen_tester_gui.py:259] - Listo.
+2025-04-15 14:25:08,154 - INFO - [screen_tester_gui.py:158] - Inicialización de la GUI completada.
+2025-04-15 14:25:08,155 - INFO - [screen_tester_gui.py:259] - Listo.
+2025-04-15 14:25:10,996 - INFO - [screen_tester_gui.py:708] - Solicitud de cierre...
+2025-04-15 14:25:14,009 - INFO - [screen_tester_gui.py:710] - ==================== Aplicación cerrada ====================
