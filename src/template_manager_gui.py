@@ -1,830 +1,651 @@
-# --- START OF FILE template_manager_gui ---
+# --- START OF FILE src/template_manager_gui.py ---
+# --- VERSIÓN REFACTORIZADA - LÓGICA IMPLEMENTADA ---
 
-import os
-import json
-import datetime
-import time
 import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
-import cv2
-import numpy as np
-from PIL import Image, ImageTk, ImageDraw, ImageFont # Añadido ImageDraw y ImageFont
-import mss
-from tkinter import font
+from tkinter import ttk, font as tkFont, messagebox, simpledialog, filedialog # Asegurar simpledialog
+import os
+import sys
 import logging
-import re # Importado para validación nombre plantilla
+import time
+import cv2
+import re # Necesario para validar nombres
+import datetime # Necesario para timestamp en save_template
 
-# --- Constantes del proyecto ---
+# --- Configuración de Rutas e Importaciones ---
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SCRIPT_DIR)
-IMAGES_DIR = os.path.join(PROJECT_DIR, "images")
-CONFIG_DIR = os.path.join(PROJECT_DIR, "config")
-OCR_MAPPING_FILE_PATH = os.path.join(CONFIG_DIR, "ocr_regions.json")
-TEMPLATE_MAPPING_FILE_PATH = os.path.join(CONFIG_DIR, "templates_mapping.json")
-MAX_PREVIEW_WIDTH = 800
+if PROJECT_DIR not in sys.path: sys.path.insert(0, PROJECT_DIR)
+if SCRIPT_DIR not in sys.path: sys.path.insert(1, SCRIPT_DIR)
 
-# --- Ajustes de UI ---
-DEFAULT_FONT_SIZE = 12
-MIN_WINDOW_WIDTH = 950 # Ligeramente más ancho para el Treeview
-MIN_WINDOW_HEIGHT = 750
-MIN_CANVAS_WIDTH = 400
-MIN_CANVAS_HEIGHT = 300
-PREVIEW_NUMBER_FONT_SIZE = 14
-TREEVIEW_ROW_HEIGHT = 25 # Ajustar según fuente
+try:
+    from template_manager_utils import (
+        load_json_mapping, save_json_mapping,
+        load_ocr_data, save_ocr_data,
+        load_template_data, save_template_data,
+        capture_screen, tk_select_region_base,
+        tk_select_ocr_region, tk_select_monitor_region,
+        detect_monitors,
+        IMAGES_DIR, CONFIG_DIR, OCR_MAPPING_FILE_PATH, TEMPLATE_MAPPING_FILE_PATH
+    )
+    from panels.template_panel import TemplatePanel
+    from panels.image_preview_panel import ImagePreviewPanel # Importar el correcto
+    from panels.ocr_definition_panel import OcrDefinitionPanel # Importar el correcto
 
-# --- Configuración de Logging ---
+except ImportError as e:
+    try: root = tk.Tk(); root.withdraw(); messagebox.showerror("Error Crítico Importación", f"No se pudo importar módulo.\n{e}\nVerifique utils y panels.")
+    except Exception: pass
+    print(f"Error crítico importación: {e}\nPython Path: {sys.path}"); sys.exit(1)
+
+# --- Configuración Logging ---
+# (Sin cambios)
 log_file_path = os.path.join(PROJECT_DIR, "logs", "template_manager.log")
 os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s [%(filename)s:%(lineno)d] - %(message)s', handlers=[logging.FileHandler(log_file_path, encoding='utf-8', mode='a'), logging.StreamHandler()])
+logging.info(f"\n{'='*20} Iniciando Template Manager GUI (Refactorizado v1.3 - Lógica) {'='*20}")
 
-if not logging.getLogger().hasHandlers():
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s',
-        handlers=[
-            logging.FileHandler(log_file_path, encoding='utf-8'),
-            logging.StreamHandler()
-        ]
-    )
+# --- Constantes GUI ---
+# (Sin cambios)
+APP_TITLE = "Template Manager GUI v2.0"
+MIN_WINDOW_WIDTH = 1200
+MIN_WINDOW_HEIGHT = 750
+DEFAULT_FONT_SIZE_GUI = 10
+DEFAULT_THEME = 'clam'
 
-# --- Funciones Auxiliares (Sin cambios) ---
-def load_json_mapping(file_path, file_desc="mapping"):
-   """Carga un mapping JSON desde un archivo con manejo de errores."""
-   if not os.path.exists(file_path):
-       logging.warning(f"Archivo de {file_desc} '{file_path}' no encontrado. Usando diccionario vacío.")
-       return {}
-   try:
-       with open(file_path, "r", encoding="utf-8") as f:
-           content = f.read()
-           if not content:
-               logging.warning(f"Archivo de {file_desc} '{file_path}' está vacío.")
-               return {}
-           mapping = json.loads(content)
-           if not isinstance(mapping, dict):
-               logging.error(f"El contenido de {file_path} no es un diccionario JSON válido.")
-               messagebox.showerror("Error de Archivo", f"El contenido de {file_path} no es un diccionario JSON válido.")
-               return {}
-           return mapping
-   except json.JSONDecodeError as e:
-       logging.error(f"El archivo {file_path} está malformado o vacío: {e}")
-       messagebox.showerror("Error de Archivo", f"Error al leer el archivo JSON:\n{file_path}\nPuede estar corrupto o vacío.\nDetalle: {e}")
-       return {}
-   except Exception as e:
-       logging.error(f"Error inesperado al cargar {file_path}: {e}")
-       messagebox.showerror("Error", f"Error inesperado al cargar {file_desc}:\n{e}")
-       return {}
-
-def save_json_mapping(mapping, file_path, file_desc="mapping"):
-   """Guarda un diccionario de mapping en un archivo JSON."""
-   try:
-       os.makedirs(os.path.dirname(file_path), exist_ok=True)
-       with open(file_path, "w", encoding="utf-8") as f:
-           json.dump(mapping, f, indent=4, ensure_ascii=False)
-       logging.info(f"Archivo de {file_desc} guardado en: {file_path}")
-       return True
-   except Exception as e:
-       logging.error(f"Error al guardar {file_desc} en {file_path}: {e}")
-       messagebox.showerror("Error al Guardar", f"No se pudo guardar el archivo {file_desc}:\n{file_path}\nError: {e}")
-       return False
-
-def load_ocr_data():
-   return load_json_mapping(OCR_MAPPING_FILE_PATH, "regiones OCR")
-
-def save_ocr_data(mapping):
-   return save_json_mapping(mapping, OCR_MAPPING_FILE_PATH, "regiones OCR")
-
-def load_template_data():
-    return load_json_mapping(TEMPLATE_MAPPING_FILE_PATH, "plantillas")
-
-def save_template_data(mapping):
-   return save_json_mapping(mapping, TEMPLATE_MAPPING_FILE_PATH, "plantillas")
-
-def capture_screen(region=None, monitor=1):
-   # (Sin cambios respecto a la versión anterior que te di)
-   try:
-       with mss.mss() as sct:
-           monitors = sct.monitors
-           if monitor < 1 or monitor >= len(monitors):
-                messagebox.showerror("Error de Monitor", f"Monitor {monitor} no válido. Monitores disponibles: 1 a {len(monitors)-1}")
-                return None
-           target_monitor = monitors[monitor]
-           capture_area = region if region is not None else target_monitor
-           if region:
-                capture_area['width'] = min(region['width'], target_monitor['width'] - (region['left'] - target_monitor['left']))
-                capture_area['height'] = min(region['height'], target_monitor['height'] - (region['top'] - target_monitor['top']))
-                capture_area['left'] = max(region['left'], target_monitor['left'])
-                capture_area['top'] = max(region['top'], target_monitor['top'])
-                if capture_area['width'] <= 0 or capture_area['height'] <= 0:
-                    logging.error(f"Región calculada inválida: {capture_area}")
-                    messagebox.showerror("Error de Región", f"La región especificada {region} resulta inválida o fuera de los límites del monitor {monitor}.")
-                    return None
-           logging.info(f"Capturando área: {capture_area}")
-           sct_img = sct.grab(capture_area)
-           img = np.array(sct_img)
-           img_bgr = cv2.cvtColor(img, cv2.COLOR_BGRA2BGR)
-           return img_bgr
-   except mss.ScreenShotError as e:
-        logging.error(f"Error MSS capturando {capture_area}: {e}")
-        messagebox.showerror("Error de Captura", f"No se pudo capturar la pantalla/región:\n{e}")
-        return None
-   except Exception as e:
-       logging.error(f"Error inesperado en captura: {e}")
-       messagebox.showerror("Error Inesperado", f"Error inesperado durante la captura:\n{e}")
-       return None
-
-def tk_select_region_base(root, image, window_title, rect_outline="green", button_text="Confirmar Selección"):
-    # (Sin cambios respecto a la versión anterior que te di)
-   if image is None:
-        messagebox.showerror("Error Interno", "No se proporcionó imagen para la selección de región.")
-        return None
-   orig_height, orig_width = image.shape[:2]
-   scale = 1.0
-   max_display_width = root.winfo_screenwidth() * 0.85
-   max_display_height = root.winfo_screenheight() * 0.85
-   scale_w = max_display_width / orig_width if orig_width > max_display_width else 1.0
-   scale_h = max_display_height / orig_height if orig_height > max_display_height else 1.0
-   scale = min(scale_w, scale_h, 1.0)
-   new_width = int(orig_width * scale)
-   new_height = int(orig_height * scale)
-   if new_width < 1 or new_height < 1:
-        messagebox.showerror("Error de Imagen", "La imagen original o redimensionada tiene tamaño inválido.")
-        return None
-   try:
-       interpolation = cv2.INTER_LANCZOS4 if scale < 1.0 else cv2.INTER_AREA
-       resized_img = cv2.resize(image, (new_width, new_height), interpolation=interpolation)
-   except Exception as e:
-        logging.error(f"Error redimensionando imagen: {e}")
-        messagebox.showerror("Error de Redimensionamiento", f"No se pudo redimensionar la imagen:\n{e}")
-        return None
-   try:
-       img_rgb = cv2.cvtColor(resized_img, cv2.COLOR_BGR2RGB)
-       pil_img = Image.fromarray(img_rgb)
-       tk_img = ImageTk.PhotoImage(pil_img)
-   except Exception as e:
-       logging.error(f"Error convirtiendo imagen para Tkinter: {e}")
-       messagebox.showerror("Error de Imagen", f"No se pudo convertir la imagen para mostrar:\n{e}")
-       return None
-   sel_win = tk.Toplevel(root)
-   sel_win.title(window_title)
-   sel_win.grab_set()
-   min_w = max(400, tk_img.width() // 2)
-   min_h = max(300, tk_img.height() // 2)
-   sel_win.minsize(min_w, min_h)
-   sel_win.geometry(f"+{root.winfo_x()+50}+{root.winfo_y()+50}")
-   canvas = tk.Canvas(sel_win, width=tk_img.width(), height=tk_img.height(), cursor="cross")
-   canvas.pack(padx=10, pady=10, fill="both", expand=True)
-   img_on_canvas = canvas.create_image(0, 0, anchor="nw", image=tk_img)
-   canvas.image = tk_img
-   selection = {"x1": None, "y1": None, "x2": None, "y2": None}
-   rect = None
-   confirmed_region_coords = None
-   def on_button_press(event):
-       selection["x1"] = canvas.canvasx(event.x)
-       selection["y1"] = canvas.canvasy(event.y)
-       nonlocal rect
-       if rect: canvas.delete(rect)
-       rect = canvas.create_rectangle(selection["x1"], selection["y1"], selection["x1"], selection["y1"],
-                                      outline=rect_outline, width=2, dash=(4, 2))
-   def on_move_press(event):
-       if rect and selection["x1"] is not None:
-           cur_x = canvas.canvasx(event.x)
-           cur_y = canvas.canvasy(event.y)
-           canvas.coords(rect, selection["x1"], selection["y1"], cur_x, cur_y)
-   def on_button_release(event):
-       if rect and selection["x1"] is not None:
-           selection["x2"] = canvas.canvasx(event.x)
-           selection["y2"] = canvas.canvasy(event.y)
-           x1_final = min(selection["x1"], selection["x2"])
-           y1_final = min(selection["y1"], selection["y2"])
-           x2_final = max(selection["x1"], selection["x2"])
-           y2_final = max(selection["y1"], selection["y2"])
-           selection["x1"], selection["y1"] = x1_final, y1_final
-           selection["x2"], selection["y2"] = x2_final, y2_final
-           canvas.coords(rect, x1_final, y1_final, x2_final, y2_final)
-   canvas.bind("<ButtonPress-1>", on_button_press)
-   canvas.bind("<B1-Motion>", on_move_press)
-   canvas.bind("<ButtonRelease-1>", on_button_release)
-   button_frame = ttk.Frame(sel_win)
-   button_frame.pack(pady=10)
-   def confirm_selection():
-       nonlocal confirmed_region_coords
-       if None not in (selection["x1"], selection["y1"], selection["x2"], selection["y2"]):
-           left_r, top_r = selection["x1"], selection["y1"]
-           width_r = selection["x2"] - selection["x1"]
-           height_r = selection["y2"] - selection["y1"]
-           left_orig = int((left_r / scale) + 0.5)
-           top_orig = int((top_r / scale) + 0.5)
-           width_orig = int((width_r / scale) + 0.5)
-           height_orig = int((height_r / scale) + 0.5)
-           width_orig = max(1, min(width_orig, orig_width - left_orig))
-           height_orig = max(1, min(height_orig, orig_height - top_orig))
-           left_orig = max(0, min(left_orig, orig_width - 1))
-           top_orig = max(0, min(top_orig, orig_height - 1))
-           if width_orig > 0 and height_orig > 0:
-                confirmed_region_coords = {"left": left_orig, "top": top_orig, "width": width_orig, "height": height_orig}
-                logging.info(f"Región seleccionada (original): {confirmed_region_coords}")
-           else:
-                logging.warning("Selección resultó en región inválida (ancho/alto <= 0)")
-                messagebox.showwarning("Selección Inválida", "La región seleccionada es demasiado pequeña o inválida.")
-       sel_win.destroy()
-   def cancel_selection():
-        sel_win.destroy()
-   confirm_btn = ttk.Button(button_frame, text=button_text, command=confirm_selection)
-   confirm_btn.pack(side="left", padx=5)
-   cancel_btn = ttk.Button(button_frame, text="Cancelar", command=cancel_selection)
-   cancel_btn.pack(side="left", padx=5)
-   sel_win.bind("<Escape>", lambda e: cancel_selection())
-   root.wait_window(sel_win)
-   return confirmed_region_coords
-
-def tk_select_ocr_region(root, image):
-   """Llama a la función base para seleccionar región OCR."""
-   return tk_select_region_base(root, image, "Seleccione Región OCR", rect_outline="green", button_text="Confirmar Selección OCR")
-
-def tk_select_monitor_region(root, monitor_img, monitor_info):
-   # (Sin cambios respecto a la versión anterior que te di)
-   coords_relative_to_monitor_img = tk_select_region_base(
-       root, monitor_img, "Seleccione Región del Monitor",
-       rect_outline="blue", button_text="Confirmar Región Monitor"
-   )
-   if coords_relative_to_monitor_img:
-       coords_absolute = coords_relative_to_monitor_img.copy()
-       coords_absolute['left'] += monitor_info['left']
-       coords_absolute['top'] += monitor_info['top']
-       logging.info(f"Región seleccionada (absoluta): {coords_absolute}")
-       return coords_absolute
-   return None
-
-
+# --- Clase Principal ---
 class TemplateManagerGUI(tk.Tk):
-   def __init__(self):
-       super().__init__()
-       self.title("Gestor de Zonas OCR y Plantillas")
-       self.minsize(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT)
+    def __init__(self):
+        # (Sin cambios)
+        super().__init__(); logging.info("Inicializando..."); self.title(APP_TITLE); self.minsize(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT)
+        try: sw, sh = self.winfo_screenwidth(), self.winfo_screenheight(); x, y = (sw//2)-(MIN_WINDOW_WIDTH//2), (sh//2)-(MIN_WINDOW_HEIGHT//2); self.geometry(f"{MIN_WINDOW_WIDTH}x{MIN_WINDOW_HEIGHT}+{x}+{y}")
+        except tk.TclError: self.geometry(f"{MIN_WINDOW_WIDTH}x{MIN_WINDOW_HEIGHT}")
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
+        self.monitors_info = detect_monitors(); self.template_names_mapping = {}; self.ocr_regions_mapping = {}; self.current_template_name = None; self.current_image_filename = None; self.current_image_path = None; self.current_image_numpy = None; self.current_ocr_regions = []; self.status_label_var = tk.StringVar(value="Inicializando...")
+        self.template_panel = None; self.preview_panel = None; self.ocr_panel = None
+        self._setup_styles_and_fonts(); self._create_widgets(); self.load_mappings_from_json(); self._reset_ui_state(); logging.info("GUI inicializada."); self.status_message("Listo.")
 
-       self.captured_image = None
-       self.tk_img_preview = None
-       self.selected_image_path = None
-       self.ocr_regions = [] # Lista de dicts: {"region": {...}, "expected_text": [...]} para la imagen actual
-       # self.ocr_region_rect_ids = [] # Ya no se usa, se dibuja en Pillow
-       self.current_template_name = None
-       self.template_names_mapping = {}
-       self.ocr_regions_mapping = {}
-       self.monitors_info = self.detect_monitors()
+    def _setup_styles_and_fonts(self):
+        logging.debug("Configurando estilos y fuentes.")
+        self.style = ttk.Style(self)
+        try:
+            avail = self.style.theme_names()
+            logging.debug(f"Temas disponibles: {avail}")
+            if DEFAULT_THEME in avail:
+                self.style.theme_use(DEFAULT_THEME)
+                logging.info(f"Tema: {DEFAULT_THEME}")
+            else:
+                logging.warning(f"Tema '{DEFAULT_THEME}' no encontrado. Usando: {self.style.theme_use()}")
+        except tk.TclError as e:  # <-- except al mismo nivel que try
+            logging.warning(f"Error aplicando tema ttk: {e}")
+        except Exception as e_gen:  # <-- Captura genérica por si acaso
+            logging.error(f"Error inesperado configurando tema: {e_gen}")
 
-       self.setup_fonts_and_styles()
-       self.preview_font = self._get_preview_font()
-
-       self.create_widgets()
-
-       self.load_template_names_from_json()
-       self.load_ocr_regions_from_json()
-
-       logging.info("Template Manager GUI inicializado.")
-
-   def _get_preview_font(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-        try: return ImageFont.truetype("consola.ttf", PREVIEW_NUMBER_FONT_SIZE)
-        except IOError:
-            try: return ImageFont.truetype("cour.ttf", PREVIEW_NUMBER_FONT_SIZE)
-            except IOError:
-                 logging.warning("Fuentes Consolas/Courier no encontradas, usando fuente por defecto para números OCR.")
-                 try:
-                     tk_default_font_info = self.default_font.actual()
-                     return ImageFont.truetype(f"{tk_default_font_info['family'].lower()}.ttf", PREVIEW_NUMBER_FONT_SIZE)
-                 except Exception: return ImageFont.load_default()
-
-   def setup_fonts_and_styles(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       self.default_font = font.nametofont("TkDefaultFont")
-       self.default_font.configure(size=DEFAULT_FONT_SIZE)
-       style = ttk.Style(self)
-       try:
-            style.configure('.', font=self.default_font, padding=(3, 1))
-            style.configure('TLabelframe.Label', font=(self.default_font.actual()['family'], DEFAULT_FONT_SIZE, 'bold'))
-            style.configure('TButton', padding=(6, 3))
-            style.configure('TEntry', padding=(5, 3))
-            style.configure('TCombobox', padding=(5, 3))
-            style.configure('Treeview.Heading', font=(self.default_font.actual()['family'], DEFAULT_FONT_SIZE, 'bold')) # Estilo para cabeceras Treeview
-            style.configure('Treeview', rowheight=TREEVIEW_ROW_HEIGHT) # Ajustar altura fila Treeview
-       except Exception as e: logging.warning(f"No se pudo configurar completamente el estilo ttk: {e}")
-       self.option_add("*Font", self.default_font)
-
-   def detect_monitors(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       try:
-           with mss.mss() as sct:
-               logging.info(f"Monitores detectados: {sct.monitors}")
-               return sct.monitors
-       except Exception as e:
-           logging.error(f"Error detectando monitores: {e}")
-           messagebox.showerror("Error de Hardware", f"No se pudieron detectar los monitores:\n{e}")
-           return [{}]
-
-   def load_ocr_regions_from_json(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       self.ocr_regions_mapping = load_ocr_data()
-       logging.info(f"Cargadas {len(self.ocr_regions_mapping)} entradas de regiones OCR desde JSON.")
-
-   def create_widgets(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       self.grid_rowconfigure(2, weight=1)
-       self.grid_columnconfigure(0, weight=1)
-       self.create_capture_frame()
-       self.create_template_selection_frame()
-       center_frame = ttk.Frame(self)
-       center_frame.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
-       center_frame.grid_rowconfigure(0, weight=1)
-       center_frame.grid_columnconfigure(0, weight=1, minsize=MIN_CANVAS_WIDTH)
-       center_frame.grid_columnconfigure(1, weight=0, minsize=300) # Darle tamaño mínimo a columna OCR
-       self.create_preview_frame(center_frame)
-       self.create_ocr_config_frame(center_frame) # Modificado para añadir Treeview
-       self.create_status_label()
-
-   def create_capture_frame(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       capture_frame = ttk.LabelFrame(self, text="Capturar Nueva Plantilla", padding=(10, 5))
-       capture_frame.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="ew")
-       capture_options_frame = ttk.Frame(capture_frame)
-       capture_options_frame.pack(anchor="w", fill="x", padx=5, pady=2)
-       self.capture_type_var = tk.StringVar(value="monitor")
-       ttk.Radiobutton(capture_options_frame, text="Monitor Completo", variable=self.capture_type_var, value="monitor").pack(side="left", padx=(0, 10))
-       ttk.Radiobutton(capture_options_frame, text="Región del Monitor", variable=self.capture_type_var, value="region").pack(side="left", padx=(0, 10))
-       ttk.Label(capture_options_frame, text="Monitor:").pack(side="left", padx=(10, 5))
-       self.monitor_var = tk.IntVar(value=1)
-       num_monitors = len(self.monitors_info) - 1 if len(self.monitors_info) > 1 else 1
-       self.monitor_spinbox = ttk.Spinbox(capture_options_frame, from_=1, to=max(1, num_monitors), textvariable=self.monitor_var, width=5, wrap=True)
-       self.monitor_spinbox.pack(side="left", padx=5)
-       ttk.Button(capture_options_frame, text="Capturar Pantalla", command=self.capture_new_template).pack(side="left", padx=(10, 5))
-       name_frame = ttk.Frame(capture_frame)
-       name_frame.pack(anchor="w", fill="x", padx=5, pady=5)
-       ttk.Label(name_frame, text="Nombre Nueva Plantilla:").pack(side="left", padx=(0, 5))
-       self.new_template_name_var = tk.StringVar()
-       self.new_template_entry = ttk.Entry(name_frame, textvariable=self.new_template_name_var, width=30)
-       self.new_template_entry.pack(side="left", padx=5, fill="x", expand=True)
-       self.new_template_entry.bind("<Return>", lambda event: self.save_new_template())
-       ttk.Button(name_frame, text="Guardar Nueva Plantilla", command=self.save_new_template).pack(side="left", padx=(10, 5))
-
-   def create_template_selection_frame(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       template_frame = ttk.LabelFrame(self, text="Seleccionar Plantilla Existente", padding=(10, 5))
-       template_frame.grid(row=1, column=0, padx=10, pady=5, sticky="ew")
-       combo_frame = ttk.Frame(template_frame)
-       combo_frame.pack(fill="x", padx=5, pady=5)
-       ttk.Label(combo_frame, text="Plantilla:").pack(side="left", padx=(0, 5))
-       self.template_name_var = tk.StringVar()
-       self.template_name_combobox = ttk.Combobox(combo_frame, textvariable=self.template_name_var, width=40, state="readonly")
-       self.template_name_combobox.pack(side="left", padx=5, fill="x", expand=True)
-       self.template_name_combobox.bind("<<ComboboxSelected>>", self.on_template_name_selected)
-       ttk.Button(combo_frame, text="Refrescar Lista", command=self.load_template_names_from_json).pack(side="left", padx=(10, 5))
-
-   def create_preview_frame(self, parent_frame):
-        # (Sin cambios respecto a la versión anterior que te di)
-       preview_frame = ttk.LabelFrame(parent_frame, text="Previsualización", padding=(10, 5))
-       preview_frame.grid(row=0, column=0, padx=(0, 5), pady=5, sticky="nsew")
-       preview_frame.grid_rowconfigure(0, weight=1)
-       preview_frame.grid_columnconfigure(0, weight=1)
-       canvas_container = ttk.Frame(preview_frame)
-       canvas_container.grid(row=0, column=0, sticky="nsew")
-       canvas_container.grid_rowconfigure(0, weight=1)
-       canvas_container.grid_columnconfigure(0, weight=1)
-       self.preview_canvas = tk.Canvas(canvas_container, width=MIN_CANVAS_WIDTH, height=MIN_CANVAS_HEIGHT, bg="lightgrey", highlightthickness=1, highlightbackground="gray")
-       self.preview_canvas.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
-       canvas_container.bind("<Configure>", self.on_preview_resize)
-
-   def on_preview_resize(self, event=None):
-        # (Sin cambios respecto a la versión anterior que te di)
-       self.show_preview()
-
-   def create_ocr_config_frame(self, parent_frame):
-       """Crea el frame para la configuración de zonas OCR (Ahora con Treeview)."""
-       config_frame = ttk.LabelFrame(parent_frame, text="Configuración OCR", padding=(10, 5))
-       config_frame.grid(row=0, column=1, padx=(5, 0), pady=5, sticky="nswe") # Expandir en todas direcciones
-       config_frame.grid_columnconfigure(0, weight=1) # Permitir expansión horizontal interna
-       config_frame.grid_rowconfigure(4, weight=1) # Permitir que el Treeview se expanda verticalmente
-
-       # --- Botón para Marcar Región ---
-       mark_region_frame = ttk.Frame(config_frame)
-       mark_region_frame.grid(row=0, column=0, pady=(0,5), sticky="ew") # Menos padding abajo
-       self.mark_region_button = ttk.Button(mark_region_frame, text="Marcar Región OCR", command=self.mark_ocr_region, state="disabled")
-       self.mark_region_button.pack(pady=2)
-
-       # --- Entrada para Texto Esperado ---
-       expected_text_frame = ttk.Frame(config_frame)
-       expected_text_frame.grid(row=1, column=0, pady=(0,2), sticky="ew")
-       expected_text_frame.grid_columnconfigure(0, weight=1)
-       ttk.Label(expected_text_frame, text="Texto Esperado (antes de marcar, separa con '|'):").pack(anchor="w", padx=5)
-       self.expected_text_var = tk.StringVar()
-       self.expected_text_entry = ttk.Entry(expected_text_frame, textvariable=self.expected_text_var)
-       self.expected_text_entry.pack(fill="x", padx=5, pady=(0, 5))
-       self.expected_text_entry.bind("<Return>", lambda event: self.mark_ocr_region())
-
-       # --- Label contador de zonas ---
-       self.region_label = ttk.Label(config_frame, text="Zonas OCR: 0 definida(s)", anchor="center")
-       self.region_label.grid(row=2, column=0, pady=3, sticky="ew")
-
-       # --- Treeview para mostrar textos esperados ---
-       tree_label = ttk.Label(config_frame, text="Textos Esperados Guardados:")
-       tree_label.grid(row=3, column=0, padx=5, pady=(5, 0), sticky="w")
-
-       tree_frame = ttk.Frame(config_frame) # Frame para Treeview y Scrollbar
-       tree_frame.grid(row=4, column=0, padx=5, pady=5, sticky="nsew")
-       tree_frame.grid_rowconfigure(0, weight=1)
-       tree_frame.grid_columnconfigure(0, weight=1)
-
-       self.ocr_tree = ttk.Treeview(tree_frame, columns=("#", "Textos"), show="headings", height=6)
-       self.ocr_tree.heading("#", text="#", anchor="center")
-       self.ocr_tree.column("#", width=40, anchor="center", stretch=tk.NO)
-       self.ocr_tree.heading("Textos", text="Texto(s) Esperado(s)")
-       self.ocr_tree.column("Textos", width=200, stretch=tk.YES) # Columna de texto expandible
-       self.ocr_tree.grid(row=0, column=0, sticky="nsew")
-
-       ocr_scrollbar = ttk.Scrollbar(tree_frame, orient="vertical", command=self.ocr_tree.yview)
-       ocr_scrollbar.grid(row=0, column=1, sticky="ns")
-       self.ocr_tree['yscrollcommand'] = ocr_scrollbar.set
-
-       # --- Botones de Acción OCR ---
-       action_frame = ttk.Frame(config_frame)
-       action_frame.grid(row=5, column=0, pady=(5, 0), sticky="ew") # Pegado al Treeview
-       self.clear_regions_button = ttk.Button(action_frame, text="Limpiar Zonas Marcadas", command=self.clear_ocr_regions, state="disabled")
-       self.clear_regions_button.pack(side="left", padx=(5, 10), pady=5, expand=True)
-       self.save_ocr_button = ttk.Button(action_frame, text="Guardar Zonas OCR", command=self.save_ocr_regions, state="disabled")
-       self.save_ocr_button.pack(side="left", padx=10, pady=5, expand=True)
-
-   def create_status_label(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       self.status_label_var = tk.StringVar(value="Listo.")
-       status_frame = ttk.Frame(self, height=25)
-       status_frame.grid(row=3, column=0, padx=10, pady=(5, 10), sticky="ew")
-       status_frame.pack_propagate(False)
-       status_label = ttk.Label(status_frame, textvariable=self.status_label_var, anchor="w")
-       status_label.pack(side="left", padx=5, pady=2)
-
-   def load_template_names_from_json(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       self.status_message("Cargando lista de plantillas...")
-       try:
-           mapping = load_template_data()
-           self.template_names_mapping = mapping
-           template_names = sorted(list(self.template_names_mapping.keys()))
-           self.template_name_combobox['values'] = template_names
-           if not template_names:
-                self.template_name_var.set("")
-                messagebox.showinfo("Sin Plantillas", "No se encontraron plantillas en el archivo de configuración.")
-           self.status_message(f"Lista de plantillas refrescada ({len(template_names)} encontrada(s)). Seleccione una.")
-           logging.info(f"Cargados {len(template_names)} nombres de plantillas en el Combobox.")
-       except Exception as e:
-           logging.error(f"Error inesperado al cargar nombres de plantillas: {e}")
-           messagebox.showerror("Error Crítico", f"Error al cargar nombres de plantillas: {e}")
-           self.status_message("Error al cargar lista de plantillas.")
-
-   def on_template_name_selected(self, event=None):
-       """Se llama al seleccionar plantilla. Carga imagen y datos OCR asociados."""
-       selected_name = self.template_name_var.get()
-       if not selected_name: return
-
-       self.current_template_name = selected_name
-       self.status_message(f"Cargando plantilla '{selected_name}'...")
-       self.clear_ocr_regions() # Limpia regiones y Treeview de la sesión anterior
-
-       image_files = self.template_names_mapping.get(selected_name, [])
-       self.captured_image = None
-       self.selected_image_path = None
-
-       # --- Lógica de carga de imagen (sin cambios) ---
-       if image_files:
-           first_image_file = image_files[0]
-           image_path = os.path.join(IMAGES_DIR, first_image_file)
-           logging.info(f"Intentando cargar imagen: {image_path} para plantilla '{selected_name}'")
-           if os.path.exists(image_path):
-               try:
-                   img_temp = cv2.imread(image_path)
-                   if img_temp is None:
-                       try:
-                           pil_img = Image.open(image_path)
-                           img_temp = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
-                           if img_temp is None: raise Exception("Pillow también falló.")
-                           logging.warning(f"OpenCV falló, pero Pillow leyó '{first_image_file}'.")
-                       except Exception as pil_e:
-                            raise Exception(f"OpenCV y Pillow fallaron. Pillow error: {pil_e}")
-                   self.selected_image_path = image_path
-                   self.captured_image = img_temp
-                   logging.info(f"Imagen '{first_image_file}' cargada para '{selected_name}'.")
-               except Exception as e:
-                   logging.error(f"Error crítico al cargar imagen '{first_image_file}' para '{selected_name}': {e}")
-                   messagebox.showerror("Error Carga Imagen", f"No se pudo cargar/procesar:\n{first_image_file}\nError: {e}")
-           else:
-               logging.warning(f"Archivo '{first_image_file}' no encontrado en {IMAGES_DIR}.")
-               messagebox.showwarning("Archivo Faltante", f"No se encontró imagen:\n{first_image_file}\nAsociada a '{selected_name}'.")
-       else:
-            logging.warning(f"No hay archivos de imagen listados para '{selected_name}'.")
-            messagebox.showwarning("Sin Imágenes Asociadas", f"Plantilla '{selected_name}' sin imágenes asociadas.")
-
-       # --- Habilitar/Deshabilitar botones OCR ---
-       can_mark = self.captured_image is not None
-       self.mark_region_button.config(state="normal" if can_mark else "disabled")
-       # Botones Limpiar/Guardar se habilitan si hay regiones *Y* se puede marcar
-       self.clear_regions_button.config(state="disabled") # Se habilita si hay regiones
-       self.save_ocr_button.config(state="disabled") # Se habilita si hay regiones
-
-       # --- Cargar y mostrar regiones OCR existentes ---
-       self.ocr_regions = [] # Empezar con lista vacía para este estado
-       if selected_name in self.ocr_regions_mapping:
-           loaded_regions = self.ocr_regions_mapping[selected_name]
-           if isinstance(loaded_regions, list):
-               valid_regions = []
-               for r in loaded_regions:
-                   if isinstance(r, dict) and 'region' in r and isinstance(r['region'], dict) and all(k in r['region'] for k in ('left', 'top', 'width', 'height')):
-                       r['expected_text'] = r.get('expected_text', [])
-                       if not isinstance(r['expected_text'], list):
-                           logging.warning(f"Corrigiendo 'expected_text' inválido para '{selected_name}'.")
-                           r['expected_text'] = []
-                       valid_regions.append(r)
-                   else:
-                       logging.warning(f"Eliminada región OCR mal formada para '{selected_name}': {r}")
-               self.ocr_regions = valid_regions
-           else:
-                logging.warning(f"Datos OCR para '{selected_name}' no son lista. Ignorando.")
-           message_ocr = f"{len(self.ocr_regions)} zona(s) OCR cargada(s)."
-       else:
-           message_ocr = "No hay zonas OCR predefinidas."
-
-       self.status_message(f"'{selected_name}' seleccionado. {message_ocr}")
-       self._populate_ocr_treeview() # Llenar el Treeview con las regiones cargadas
-       self.update_region_label()
-       self.show_preview() # Actualizar previsualización (dibuja regiones cargadas)
-       # Habilitar botones si hay regiones cargadas
-       if self.ocr_regions:
-           self.clear_regions_button.config(state="normal")
-           self.save_ocr_button.config(state="normal")
+        self.default_font = tkFont.nametofont("TkDefaultFont");
+        self.default_font.configure(size=DEFAULT_FONT_SIZE_GUI)
+        self.heading_font = tkFont.Font(family=self.default_font['family'], size=DEFAULT_FONT_SIZE_GUI + 1,
+                                        weight="bold");
+        self.status_font = tkFont.Font(family=self.default_font['family'], size=DEFAULT_FONT_SIZE_GUI - 1)
+        self.option_add("*Font", self.default_font)
+        self.style.configure("TLabelFrame", padding=8);
+        self.style.configure("TLabelFrame.Label", font=self.heading_font, padding=(0, 0, 0, 5))
+        self.style.configure("TButton", padding=5);
+        self.style.configure("Status.TLabel", font=self.status_font, padding=5)
+        try:  # Añadir try-except para configurar Treeview por si falla
+            tree_font_family = self.default_font.actual()['family']
+            tree_heading_font = (tree_font_family, DEFAULT_FONT_SIZE_GUI, 'bold')
+            tree_row_height = tkFont.Font(font=self.default_font).metrics('linespace') + 4
+            self.style.configure("Treeview.Heading", font=tree_heading_font)
+            self.style.configure('Treeview', rowheight=tree_row_height)
+        except Exception as e_tree:
+            logging.warning(f"Error configurando estilo Treeview: {e_tree}")
 
 
-   def _populate_ocr_treeview(self):
-        """Limpia y rellena el Treeview con las regiones OCR actuales."""
-        # Limpiar contenido anterior
-        for item in self.ocr_tree.get_children():
-            self.ocr_tree.delete(item)
-        # Rellenar con las regiones actuales en memoria (self.ocr_regions)
-        for i, region_data in enumerate(self.ocr_regions):
-            region_index = i + 1
-            expected_texts = region_data.get('expected_text', [])
-            # Unir la lista con '|' para mostrarla en la columna
-            text_display = "|".join(expected_texts) if expected_texts else ""
-            self.ocr_tree.insert("", tk.END, values=(region_index, text_display))
+    def _create_widgets(self):
+        """Crea layout e instancia paneles reales."""
+        logging.debug("Creando widgets (layout y paneles reales).")
+        main_frame = ttk.Frame(self, padding="10"); main_frame.grid(row=0, column=0, sticky="nsew")
+        self.grid_rowconfigure(0, weight=1); self.grid_columnconfigure(0, weight=1)
+        left_column = ttk.Frame(main_frame); left_column.grid(row=0, column=0, sticky="nsew", padx=(0, 5)); main_frame.grid_columnconfigure(0, weight=2, minsize=380)
+        center_column = ttk.Frame(main_frame); center_column.grid(row=0, column=1, sticky="nsew", padx=5); main_frame.grid_columnconfigure(1, weight=5, minsize=400)
+        right_column = ttk.Frame(main_frame); right_column.grid(row=0, column=2, sticky="nsew", padx=(5, 0)); main_frame.grid_columnconfigure(2, weight=2, minsize=350)
+        main_frame.grid_rowconfigure(0, weight=1)
+
+        # --- Paneles Reales ---
+        self.template_panel = TemplatePanel(left_column, self, padding=10); self.template_panel.grid(row=0, column=0, sticky="nsew"); left_column.grid_rowconfigure(0, weight=1); left_column.grid_columnconfigure(0, weight=1)
+        self.preview_panel = ImagePreviewPanel(center_column, self, padding=5); self.preview_panel.grid(row=0, column=0, sticky="nsew"); center_column.grid_rowconfigure(0, weight=1); center_column.grid_columnconfigure(0, weight=1)
+        self.ocr_panel = OcrDefinitionPanel(right_column, self, padding=10); self.ocr_panel.grid(row=0, column=0, sticky="nsew"); right_column.grid_rowconfigure(0, weight=1); right_column.grid_columnconfigure(0, weight=1)
+
+        # Barra Estado
+        self.status_bar = ttk.Label(main_frame, textvariable=self.status_label_var, style="Status.TLabel", anchor="w", relief="sunken", borderwidth=1); self.status_bar.grid(row=1, column=0, columnspan=3, sticky="sew", pady=(10, 0)); main_frame.grid_rowconfigure(1, weight=0)
+        logging.debug("Layout y paneles reales creados.")
+
+    def _reset_ui_state(self):
+        """Resetea la UI a un estado limpio inicial."""
+        logging.debug("Reseteando estado de la UI.")
+        self.current_template_name = None
+        self.current_image_filename = None
+        self.current_image_path = None
+        self.current_image_numpy = None
+        self.current_ocr_regions = []
+
+        if self.template_panel: self.template_panel.reset_panel()
+        if self.preview_panel: self.preview_panel.clear_preview()
+        if self.ocr_panel: self.ocr_panel.reset_panel()
+
+        self.update_all_button_states() # Asegurar estado correcto de botones
+        self.status_message("Listo.")
+        self.update_idletasks()
+
+    def load_mappings_from_json(self):
+        # (Sin cambios lógicos, pero llama a refresh en panel)
+        self.status_message("Cargando...", level=logging.DEBUG)
+        self.template_names_mapping = load_template_data()
+        self.ocr_regions_mapping = load_ocr_data()
+        logging.info(f"Cargados {len(self.template_names_mapping)} tpls y {len(self.ocr_regions_mapping)} OCRs.")
+        if self.template_panel:
+            self.template_panel.refresh_template_list(self.template_names_mapping) # Llama a refresh del panel
+        self.status_message("Configuraciones cargadas.")
+
+    # --- Métodos Coordinadores ---
+    def handle_template_selection(self, template_name):
+        # (Sin cambios lógicos)
+        logging.info(f"Selección TPL: {template_name}"); self.current_template_name = template_name; self._reset_ui_state_for_template_change()
+        files = self.template_names_mapping.get(template_name, [])
+        if self.template_panel: self.template_panel.populate_image_listbox(files)
+        if files: self.load_image(files[0]); self.load_ocr_for_current_template() # Carga OCR aquí
+        else: self.clear_preview_and_ocr()
+        self.update_all_button_states()
+
+    def handle_image_selection(self, image_filename):
+        # (Sin cambios lógicos)
+        if not image_filename: return # Evitar error si se deselecciona
+        logging.info(f"Selección IMG: {image_filename}"); self.load_image(image_filename)
+        # No recargar OCR aquí, ya asociado a la plantilla
+        self.update_all_button_states()
+
+    def load_image(self, filename):
+        """Carga imagen y actualiza preview (con OCR y sin selección)."""
+        # (Llama a update_preview del panel real)
+        self.status_message(f"Cargando '{filename}'...", level=logging.DEBUG); self.current_image_numpy = None; self.current_image_path = None; self.current_image_filename = None
+        if not filename: self.clear_preview_and_ocr(); return
+        image_path = os.path.join(IMAGES_DIR, filename); logging.info(f"Cargando: {image_path}")
+        if os.path.exists(image_path):
+            try:
+                img = cv2.imread(image_path);
+                if img is None: raise ValueError(f"imread None: {filename}")
+                self.current_image_numpy = img; self.current_image_path = image_path; self.current_image_filename = filename; logging.info(f"'{filename}' cargada.")
+                # --- Actualizar PreviewPanel ---
+                if self.preview_panel:
+                    self.preview_panel.update_preview(self.current_image_numpy, self.current_ocr_regions, []) # Mostrar con OCR pero sin selección
+                # -----------------------------
+                self.status_message(f"Mostrando: {filename}")
+            except Exception as e: logging.error(f"Err cargando '{filename}': {e}"); messagebox.showerror("Error", f"Err:\n{filename}\n{e}", parent=self); self.clear_preview_and_ocr()
+        else: logging.warning(f"No existe: {image_path}"); messagebox.showwarning("Falta", f"No existe:\n{filename}", parent=self); self.clear_preview_and_ocr()
+
+    def load_ocr_for_current_template(self):
+        # (Llama a populate_treeview del panel real)
+        self.current_ocr_regions = [];
+        if self.current_template_name and self.current_template_name in self.ocr_regions_mapping:
+            regions = self.ocr_regions_mapping[self.current_template_name];
+            if isinstance(regions, list):
+                 valid = [];
+                 for r in regions:
+                     if isinstance(r, dict) and 'region' in r and isinstance(r['region'], dict) and all(k in r['region'] for k in ('left','top','width','height')):
+                         r['expected_text'] = r.get('expected_text',[]);
+                         if not isinstance(r['expected_text'], list): r['expected_text']=[]
+                         valid.append(r)
+                     else: logging.warning(f"Región mal formada ign '{self.current_template_name}': {r}")
+                 self.current_ocr_regions = valid
+            else: logging.warning(f"Datos OCR para '{self.current_template_name}' no lista.")
+        logging.debug(f"Cargadas {len(self.current_ocr_regions)} OCRs para '{self.current_template_name}'.")
+        # --- Actualizar OcrPanel ---
+        if self.ocr_panel:
+            self.ocr_panel.populate_treeview(self.current_ocr_regions)
+        # --------------------------
+
+    def clear_preview_and_ocr(self):
+        # (Llama a clear y reset de paneles reales)
+        self.current_image_numpy = None; self.current_image_path = None; self.current_image_filename = None; self.current_ocr_regions = []
+        if self.preview_panel: self.preview_panel.clear_preview()
+        if self.ocr_panel: self.ocr_panel.reset_panel()
+
+    def update_all_button_states(self):
+        # (Llama a update de paneles reales)
+        if self.template_panel: self.template_panel.update_action_button_states()
+        if self.ocr_panel: self.ocr_panel._update_action_buttons_state() # Usar método interno del panel
+
+    def _reset_ui_state_for_template_change(self):
+        # (Llama a clear y reset de paneles reales)
+         self.current_image_filename = None; self.current_image_path = None; self.current_image_numpy = None; self.current_ocr_regions = []
+         if self.preview_panel: self.preview_panel.clear_preview()
+         if self.ocr_panel: self.ocr_panel.reset_panel()
 
 
-   def capture_new_template(self):
-        # (Sin cambios respecto a la versión anterior que te di)
-       capture_type = self.capture_type_var.get()
-       try: monitor_idx = self.monitor_var.get()
-       except tk.TclError: messagebox.showerror("Error", "Valor de monitor inválido."); return
-       if monitor_idx < 1 or monitor_idx >= len(self.monitors_info):
-           messagebox.showerror("Error de Monitor", f"Monitor {monitor_idx} no válido."); return
-       target_monitor_info = self.monitors_info[monitor_idx]
-       self.withdraw(); self.update_idletasks(); time.sleep(0.4)
-       logging.info(f"Iniciando captura tipo '{capture_type}' en monitor {monitor_idx}...")
-       captured_img = None
-       try:
-            if capture_type == "monitor": captured_img = capture_screen(monitor=monitor_idx)
+    # --- LÓGICA PRINCIPAL IMPLEMENTADA ---
+
+    def capture_template_action(self, capture_type, monitor_idx):
+        """Realiza la captura y actualiza la UI."""
+        logging.info(f"Captura: {capture_type} Mon:{monitor_idx}")
+        self.status_message("Capturando pantalla...")
+        self.withdraw(); self.update(); time.sleep(0.3) # Ocultar ventana brevemente
+        captured_img = None
+        try:
+            if capture_type == "monitor":
+                captured_img = capture_screen(monitor=monitor_idx)
             elif capture_type == "region":
                  monitor_image = capture_screen(monitor=monitor_idx)
                  if monitor_image is not None:
-                      self.deiconify(); self.update()
+                      self.deiconify(); self.update() # Mostrar para seleccionar
+                      target_monitor_info = self.monitors_info[monitor_idx] if monitor_idx < len(self.monitors_info) else {}
                       region_absolute = tk_select_monitor_region(self, monitor_image, target_monitor_info)
                       if region_absolute:
-                          self.withdraw(); self.update_idletasks(); time.sleep(0.2)
+                          self.withdraw(); self.update(); time.sleep(0.2) # Ocultar de nuevo
                           captured_img = capture_screen(region=region_absolute, monitor=monitor_idx)
                       else: logging.info("Selección de región cancelada.")
-                 else: logging.error("No se pudo capturar imagen del monitor.")
-       finally:
-           if self.state() == 'withdrawn': self.deiconify()
-           self.status_message("Proceso de captura finalizado.")
-       if captured_img is not None:
-           self.captured_image = captured_img
-           self.selected_image_path = None
-           self.template_name_var.set("")
-           self.current_template_name = None
-           self.clear_ocr_regions() # Limpia lista y Treeview
-           self.show_preview()
-           self.status_message("Pantalla capturada. Introduce nombre y guarda.")
-           self.mark_region_button.config(state="normal")
-           self.clear_regions_button.config(state="disabled") # No hay regiones aún
-           self.save_ocr_button.config(state="disabled")
-           self.new_template_entry.focus_set()
-       else: self.status_message("Captura cancelada o fallida.")
+                 else: logging.error("No se pudo capturar imagen del monitor para seleccionar región.")
+        finally:
+            if self.state() == 'withdrawn': self.deiconify() # Asegurar que se muestre de nuevo
+            self.status_message("Captura finalizada.")
 
-   def save_new_template(self):
-        # (Sin cambios respecto a la versión anterior que te di, incluye la pregunta para guardar OCR)
-       if self.captured_image is None: messagebox.showerror("Error", "No hay imagen capturada."); return
-       template_name = self.new_template_name_var.get().strip()
-       if not template_name: messagebox.showerror("Error", "Introduce nombre."); return
-       if not re.match(r'^[a-zA-Z0-9_.-]+$', template_name): messagebox.showerror("Error", "Nombre inválido."); return
-       timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-       safe_filename_base = re.sub(r'[^\w.-]', '_', template_name)
-       image_filename = f"{safe_filename_base}_{timestamp}.png"
-       image_path = os.path.join(IMAGES_DIR, image_filename)
-       logging.info(f"Guardando plantilla '{template_name}' como '{image_filename}'")
-       try:
-           os.makedirs(IMAGES_DIR, exist_ok=True)
-           success = cv2.imwrite(image_path, self.captured_image)
-           if not success: raise Exception("cv2.imwrite falló.")
-           logging.info(f"Imagen guardada: '{image_filename}'.")
-           mapping = load_template_data()
-           if template_name in mapping:
-               if isinstance(mapping[template_name], list):
-                   if image_filename not in mapping[template_name]: mapping[template_name].append(image_filename)
-               else: mapping[template_name] = [mapping[template_name], image_filename]
-           else: mapping[template_name] = [image_filename]
-           if save_template_data(mapping):
-               self.status_message(f"Plantilla '{template_name}' guardada.")
-               self.template_names_mapping = mapping
-               self.load_template_names_from_json()
-               self.template_name_var.set(template_name)
-               self.current_template_name = template_name
-               if self.ocr_regions:
-                    num_regions = len(self.ocr_regions)
-                    if messagebox.askyesno("Guardar Regiones OCR",
-                                           f"Hay {num_regions} region(es) OCR marcadas.\n"
-                                           f"¿Guardarlas para la nueva plantilla '{template_name}'?"):
-                         self.save_ocr_regions(force_template_name=template_name)
-                    else: logging.info("Usuario no guardó regiones OCR con nueva plantilla.")
-               self.new_template_name_var.set("")
-           else: self.status_message(f"Error guardando mapeo de plantillas.")
-       except Exception as e:
-           logging.error(f"Error guardando plantilla '{template_name}': {e}", exc_info=True)
-           messagebox.showerror("Error Crítico al Guardar", f"No se pudo guardar plantilla '{template_name}':\n{e}")
-           self.status_message(f"Error al guardar plantilla '{template_name}'.")
+        if captured_img is not None:
+            # Limpiar estado anterior antes de poner la nueva captura
+            self.clear_all_selections()
+            self.current_image_numpy = captured_img
+            self.current_image_path = None # No es de archivo
+            self.current_image_filename = None
+            if self.preview_panel: # Actualizar preview
+                 self.preview_panel.update_preview(self.current_image_numpy, [], [])
+            self.status_message("Pantalla capturada. Introduzca nombre y guarde.")
+            if self.template_panel: self.template_panel.new_template_entry.focus_set()
+            self.update_all_button_states() # Habilitar botones correspondientes
+        else:
+            self.status_message("Captura cancelada o fallida.", level=logging.WARNING)
 
-   def show_preview(self):
-        # (Sin cambios respecto a la versión anterior que te di, dibuja números)
+
+    def save_template_action(self, template_name):
+        """Guarda imagen capturada como NUEVA plantilla o AÑADE imagen a existente."""
+        # (Lógica sin cambios significativos, ya estaba bastante completa)
+        if self.current_image_numpy is None: messagebox.showerror("Error", "No hay imagen capturada.", parent=self); return
+        # Validación de nombre ya hecha en el panel, pero doble check
+        if not template_name or not re.match(r'^[a-zA-Z0-9_.-]+$', template_name): messagebox.showerror("Error", "Nombre inválido.", parent=self); return
+
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe_filename_base = re.sub(r'[^\w.-]', '_', template_name)
+        image_filename = f"{safe_filename_base}_{timestamp}.png"
+        image_path = os.path.join(IMAGES_DIR, image_filename)
+        logging.info(f"Intentando guardar '{template_name}' como '{image_filename}'")
+        is_new = template_name not in self.template_names_mapping; action = "Guardar nueva plantilla" if is_new else f"Añadir imagen a '{template_name}'"
+        if messagebox.askyesno("Confirmar", f"¿{action} como '{image_filename}'?", parent=self):
+            try:
+                os.makedirs(IMAGES_DIR, exist_ok=True); success = cv2.imwrite(image_path, self.current_image_numpy);
+                if not success: raise Exception("cv2.imwrite falló."); logging.info(f"Img guardada: {image_path}")
+                mapping = load_template_data();
+                if template_name in mapping:
+                    if isinstance(mapping[template_name], list):
+                         if image_filename not in mapping[template_name]: mapping[template_name].append(image_filename)
+                    else: mapping[template_name] = [mapping[template_name], image_filename]
+                else: mapping[template_name] = [image_filename]
+                if save_template_data(mapping):
+                    self.status_message(f"Img '{image_filename}' guardada para '{template_name}'."); self.template_names_mapping = mapping
+                    curr_sel = self.template_name_var.get() if hasattr(self, 'template_name_var') else None # Obtener del panel si existe
+                    self.load_mappings_from_json() # Recargar todo y refrescar combobox
+                    if template_name in self.template_names_mapping: # Si la plantilla existe (nueva o vieja)
+                        if self.template_panel: self.template_panel.template_name_var.set(template_name) # Seleccionar en combobox
+                        self.handle_template_selection(template_name) # Cargarla
+                    elif curr_sel and curr_sel in self.template_names_mapping: # Volver a la anterior si se añadió imagen
+                         if self.template_panel: self.template_panel.template_name_var.set(curr_sel)
+                         self.handle_template_selection(curr_sel)
+                    else: self.clear_all_selections()
+                    if is_new and self.current_ocr_regions: # Usar self.current_ocr_regions
+                        if messagebox.askyesno("Guardar OCR", f"Hay {len(self.current_ocr_regions)} region(es).\n¿Guardarlas para NUEVA plantilla '{template_name}'?", parent=self):
+                             self.save_ocr_action(force_template_name=template_name) # Llamar a save_ocr_action
+                    if self.template_panel: self.template_panel.new_template_name_var.set("") # Limpiar campo nombre
+                else:
+                    self.status_message(f"Error guardando mapeo.", level=logging.ERROR);
+                    try: os.remove(image_path); logging.warning(f"Img '{image_filename}' eliminada por fallo mapeo.")
+                    except OSError as e: logging.error(f"No se pudo borrar img tras fallo mapeo: {e}")
+            except Exception as e: logging.exception(f"Error guardando '{template_name}': {e}"); messagebox.showerror("Error Guardando", f"Error:\n{e}", parent=self); self.status_message(f"Error guardando '{template_name}'.", level=logging.ERROR)
+        else: self.status_message("Guardado cancelado.")
+
+
+    def delete_image_action(self, template_name, image_filename):
+        """Elimina una imagen específica de una plantilla."""
+        # (Implementación sin cambios lógicos, ya estaba bien)
+        msg1=f"¿Eliminar ref a '{image_filename}' de '{template_name}'?";
+        if not messagebox.askyesno("Confirmar (Mapeo)", msg1, parent=self): self.status_message("Elim ref cancelada."); return
+        fpath=os.path.join(IMAGES_DIR, image_filename)
+        del_file=messagebox.askyesno("Eliminar Archivo", f"¿ELIMINAR archivo '{image_filename}'?\n¡NO SE PUEDE DESHACER!", icon='warning', parent=self)
+        logging.info(f"Eliminando '{image_filename}' de '{template_name}'. Borrar archivo: {del_file}"); self.status_message(f"Eliminando '{image_filename}'...", level=logging.DEBUG)
         try:
-            canvas_width = self.preview_canvas.winfo_width()
-            canvas_height = self.preview_canvas.winfo_height()
-        except tk.TclError:
-            canvas_width, canvas_height = MIN_CANVAS_WIDTH, MIN_CANVAS_HEIGHT
-            logging.warning("TclError obteniendo tamaño canvas.")
-        canvas_width = max(canvas_width, MIN_CANVAS_WIDTH)
-        canvas_height = max(canvas_height, MIN_CANVAS_HEIGHT)
-        self.preview_canvas.delete("all")
-        # self.ocr_region_rect_ids = [] # Ya no se usa
+            mapping=load_template_data();
+            if template_name in mapping and isinstance(mapping[template_name], list):
+                init_list = mapping[template_name];
+                if image_filename in init_list:
+                    initial_list.remove(image_filename);
+                    if not initial_list: del mapping[template_name]; logging.info(f"Eliminada entrada completa para '{template_name}'.")
+                    else: mapping[template_name] = initial_list
+                    if save_template_data(mapping):
+                        logging.info(f"Mapeo actualizado sin '{image_filename}'."); self.template_names_mapping = mapping
+                        f_del_ok = False;
+                        if del_file:
+                            try:
+                                if os.path.exists(fpath): os.remove(fpath); logging.info(f"Archivo físico borrado: {fpath}"); f_del_ok=True
+                                else: logging.warning(f"Archivo no existe: {fpath}")
+                            except OSError as e: logging.error(f"Error borrando {fpath}: {e}"); messagebox.showerror("Error Borrado", f"Error borrando:\n{image_filename}\n{e}", parent=self)
+                        curr_sel = template_name; self.load_mappings_from_json() # Recarga combobox
+                        if curr_sel in self.template_names_mapping: # Si la plantilla aún existe
+                            if self.template_panel: self.template_panel.template_name_var.set(curr_sel)
+                            self.handle_template_selection(curr_sel) # Recargarla
+                        else: self.clear_all_selections() # Limpiar si la plantilla fue eliminada
+                        msg = f"Imagen '{image_filename}' eliminada de '{template_name}'.";
+                        if del_file and f_del_ok: msg += " Archivo borrado."
+                        elif del_file and not f_del_ok: msg += " Error al borrar archivo."
+                        self.status_message(msg)
+                    else: self.status_message("Error guardando mapeo.", level=logging.ERROR)
+                else: logging.warning(f"'{image_filename}' no en lista para '{template_name}'."); messagebox.showwarning("No Encontrado", f"'{image_filename}' no en lista.", parent=self); self.handle_template_selection(template_name) # Refrescar
+            else: logging.error(f"Plantilla '{template_name}' inválida."); messagebox.showerror("Error Datos", f"Plantilla '{template_name}' inválida.", parent=self)
+        except Exception as e: logging.exception(f"Error eliminando '{image_filename}': {e}"); messagebox.showerror("Error", f"Error:\n{e}", parent=self); self.status_message(f"Error eliminando '{image_filename}'.", level=logging.ERROR)
 
-        if self.captured_image is None:
-            self.preview_canvas.config(width=canvas_width, height=canvas_height)
-            self.preview_canvas.create_text(canvas_width / 2, canvas_height / 2, text="Carga o Captura una Imagen", fill="darkgrey", font=self.default_font, anchor="center", justify="center", width=canvas_width*0.8)
-            self.tk_img_preview = None
-            return
+
+    def rename_template_action(self, old_name, new_name):
+        """Renombra una plantilla en ambos JSON."""
+        # (Implementación sin cambios lógicos, ya estaba bien)
+        logging.info(f"Renombrando '{old_name}' a '{new_name}'"); self.status_message(f"Renombrando...", level=logging.DEBUG)
         try:
-            img_rgb = cv2.cvtColor(self.captured_image, cv2.COLOR_BGR2RGB)
-            pil_img = Image.fromarray(img_rgb)
-            img_aspect = pil_img.width / pil_img.height
-            canvas_aspect = canvas_width / canvas_height
-            if img_aspect > canvas_aspect: new_width = canvas_width; new_height = int(new_width / img_aspect)
-            else: new_height = canvas_height; new_width = int(new_height * img_aspect)
-            new_width = max(1, new_width); new_height = max(1, new_height)
-            try: resample_method = Image.Resampling.LANCZOS
-            except AttributeError: resample_method = Image.ANTIALIAS
-            pil_img_resized = pil_img.resize((new_width, new_height), resample_method)
-            draw = ImageDraw.Draw(pil_img_resized)
-            scale_x = new_width / self.captured_image.shape[1]
-            scale_y = new_height / self.captured_image.shape[0]
-            for i, region_data in enumerate(self.ocr_regions):
-                 try:
-                     region = region_data['region']
-                     x1_r = int(region['left'] * scale_x)
-                     y1_r = int(region['top'] * scale_y)
-                     x2_r = int((region['left'] + region['width']) * scale_x)
-                     y2_r = int((region['top'] + region['height']) * scale_y)
-                     outline_color = "purple" if region_data.get('expected_text') else "red"
-                     draw.rectangle([x1_r, y1_r, x2_r, y2_r], outline=outline_color, width=2)
-                     text_num = str(i + 1)
-                     text_pos_x = x1_r + 3; text_pos_y = y1_r + 1
-                     try: bbox = self.preview_font.getbbox(text_num)
-                     except AttributeError: bbox = self.preview_font.getmask(text_num).getbbox() # Fallback older Pillow
-                     text_width = bbox[2] - bbox[0]
-                     text_height = bbox[3] - bbox[1]
-                     draw.rectangle([text_pos_x - 2, text_pos_y -1, text_pos_x + text_width + 2, text_pos_y + text_height + 1], fill="white")
-                     draw.text((text_pos_x, text_pos_y), text_num, fill=outline_color, font=self.preview_font)
-                 except Exception as e: logging.error(f"Error dibujando región OCR {i}: {e}", exc_info=True)
-            self.tk_img_preview = ImageTk.PhotoImage(pil_img_resized)
-            x_offset = (canvas_width - new_width) // 2
-            y_offset = (canvas_height - new_height) // 2
-            self.preview_canvas.create_image(x_offset, y_offset, anchor="nw", image=self.tk_img_preview)
-            self.preview_canvas.image = self.tk_img_preview
-            self.preview_canvas.config(width=canvas_width, height=canvas_height)
+            tpl_map = load_template_data(); ocr_map = load_ocr_data()
+            if old_name not in tpl_map: messagebox.showerror("Error", f"'{old_name}' no encontrada.", parent=self); self.load_mappings_from_json(); return
+            # No necesitamos comprobar si new_name existe aquí porque el panel ya lo hizo
+            tpl_map[new_name] = tpl_map.pop(old_name); logging.debug(f"Renombrado en tpl_map.")
+            if old_name in ocr_map: ocr_map[new_name] = ocr_map.pop(old_name); logging.debug(f"Renombrado en ocr_map.")
+            tpl_ok = save_template_data(tpl_map); ocr_ok = save_ocr_data(ocr_map)
+            if tpl_ok and ocr_ok:
+                logging.info(f"Renombrado a '{new_name}'."); self.template_names_mapping=tpl_map; self.ocr_regions_mapping=ocr_map
+                self.load_mappings_from_json(); # Recargar combobox
+                if self.template_panel: self.template_panel.template_name_var.set(new_name); # Seleccionar nuevo nombre
+                self.handle_template_selection(new_name) # Cargar datos para nuevo nombre
+                self.status_message(f"Plantilla renombrada a '{new_name}'.")
+            else: messagebox.showerror("Error Guardando", "Error guardando mapeos.", parent=self); self.status_message("Error guardando tras renombrar.", level=logging.ERROR); self.load_mappings_from_json(); self.load_ocr_regions_from_json()
+        except Exception as e: logging.exception(f"Error renombrando '{old_name}' a '{new_name}': {e}"); messagebox.showerror("Error", f"Error:\n{e}", parent=self); self.status_message(f"Error renombrando.", level=logging.ERROR)
+
+    # --- Dentro de la clase TemplateManagerGUI ---
+
+    def delete_template_action(self, template_name):
+        """Elimina plantilla completa (mapeos y opcionalmente archivos)."""
+        files = self.template_names_mapping.get(template_name, []);
+        n_files = len(files)
+        msg1 = f"¿Eliminar plantilla '{template_name}'?\n({n_files} imagen(es)).";
+        if template_name in self.ocr_regions_mapping: msg1 += f"\nSe eliminarán sus {len(self.ocr_regions_mapping[template_name])} zona(s) OCR."
+        if not messagebox.askyesno("Confirmar", msg1, parent=self): self.status_message(
+            "Eliminación cancelada."); return
+        del_files = False;
+        if files: del_files = messagebox.askyesno("Eliminar Archivos",
+                                                  f"¿ELIMINAR TAMBIÉN los {n_files} archivo(s)?\n{files}\n¡NO SE PUEDE DESHACER!",
+                                                  icon='warning', parent=self)
+        logging.info(f"Eliminando plantilla '{template_name}'. Borrar archivos: {del_files}");
+        self.status_message(f"Eliminando '{template_name}'...", level=logging.DEBUG)
+        try:
+            tpl_map = load_template_data();
+            ocr_map = load_ocr_data();
+            mod_tpl = False;
+            mod_ocr = False
+            if template_name in tpl_map: del tpl_map[template_name]; mod_tpl = True; logging.debug(
+                f"Eliminado de tpl_map.")
+            if template_name in ocr_map: del ocr_map[template_name]; mod_ocr = True; logging.debug(
+                f"Eliminado de ocr_map.")
+
+            # --- SECCIÓN CORREGIDA ---
+            tpl_saved = True  # Asumir éxito si no se modificó
+            if mod_tpl:
+                logging.debug("Guardando mapeo de plantillas modificado...")
+                tpl_saved = save_template_data(tpl_map)  # Guardar si se modificó
+
+            ocr_saved = True  # Asumir éxito si no se modificó
+            if mod_ocr:
+                logging.debug("Guardando mapeo OCR modificado...")
+                ocr_saved = save_ocr_data(ocr_map)  # Guardar si se modificó
+            # --- FIN SECCIÓN CORREGIDA ---
+
+            if tpl_saved and ocr_saved:
+                logging.info(f"Mapeos actualizados sin '{template_name}'.");
+                self.template_names_mapping = tpl_map;
+                self.ocr_regions_mapping = ocr_map
+                f_ok = True;
+                f_errs = [];
+                if del_files and files:
+                    logging.info(f"Eliminando archivos: {files}");
+                    for fname in files:
+                        fpath = os.path.join(IMAGES_DIR, fname);
+                        try:
+                            if os.path.exists(fpath):
+                                os.remove(fpath); logging.info(f"  Archivo borrado: {fpath}")
+                            else:
+                                logging.warning(f"  Archivo no existe: {fpath}")
+                        except OSError as e:
+                            logging.error(f"  Error borrando {fpath}: {e}"); f_errs.append(fname); f_ok = False
+                self.load_mappings_from_json();
+                self.clear_all_selections()  # Recargar lista y limpiar UI
+                msg = f"Plantilla '{template_name}' eliminada.";
+                if del_files and f_ok:
+                    msg += " Archivos borrados."
+                elif del_files and not f_ok:
+                    msg += f" Errores borrando: {f_errs}."
+                self.status_message(msg)
+            else:
+                messagebox.showerror("Error Guardando", "Error guardando mapeos.", parent=self); self.status_message(
+                    "Error guardando tras eliminar.",
+                    level=logging.ERROR); self.load_mappings_from_json(); self.load_ocr_regions_from_json()
         except Exception as e:
-            logging.error(f"Error fatal durante show_preview: {e}", exc_info=True)
-            self.preview_canvas.create_text(canvas_width / 2, canvas_height / 2, text=f"Error al mostrar previsualización:\n{e}", fill="red", font=self.default_font, anchor="center", justify="center", width=canvas_width*0.8)
-            self.tk_img_preview = None
+            logging.exception(f"Error eliminando '{template_name}': {e}"); messagebox.showerror("Error", f"Error:\n{e}",
+                                                                                                parent=self); self.status_message(
+                f"Error eliminando '{template_name}'.", level=logging.ERROR)
 
-   def mark_ocr_region(self):
-       """Marca región OCR, la asocia con texto esperado (si hay) y actualiza UI."""
-       if self.captured_image is None:
-            messagebox.showerror("Error", "Carga o captura una imagen primero.")
+    def mark_ocr_action(self, expected_text_list):
+        """Marca una nueva región OCR y la añade a la lista en memoria."""
+        if self.current_image_numpy is None:
+            messagebox.showerror("Error", "Cargue o capture una imagen primero.", parent=self)
             return
 
-       # Leer el texto ANTES de abrir la ventana de selección
-       expected_text_str = self.expected_text_var.get().strip()
-       expected_texts = [txt.strip() for txt in expected_text_str.split('|') if txt.strip()]
+        logging.info(f"Solicitando selección OCR. Texto a asociar: {expected_text_list}")
+        self.status_message("Selecciona la región OCR en la nueva ventana...")
+        self.withdraw(); self.update() # Ocultar mientras selecciona
+        region_coords = tk_select_ocr_region(self, self.current_image_numpy)
+        self.deiconify(); self.update() # Mostrar de nuevo
 
-       logging.info(f"Solicitando selección OCR. Texto esperado a asociar: {expected_texts}")
-       self.status_message("Selecciona la región OCR en la nueva ventana...")
-       self.withdraw()
-       region_coords = tk_select_ocr_region(self, self.captured_image)
-       self.deiconify()
+        if region_coords:
+            new_region_data = {"region": region_coords, "expected_text": expected_text_list}
+            self.current_ocr_regions.append(new_region_data) # Añadir a la lista en memoria
+            new_index = len(self.current_ocr_regions) - 1 # Índice 0-based
+            logging.info(f"Nueva región OCR {new_index+1} añadida (memoria): {new_region_data}")
 
-       if region_coords:
-           new_region_data = {"region": region_coords, "expected_text": expected_texts}
-           self.ocr_regions.append(new_region_data)
-           region_index = len(self.ocr_regions)
-           logging.info(f"Nueva región OCR {region_index} añadida: {new_region_data}")
+            # Actualizar UI
+            if self.ocr_panel: self.ocr_panel.populate_treeview(self.current_ocr_regions)
+            if self.preview_panel: self.preview_panel.update_preview(self.current_image_numpy, self.current_ocr_regions, [new_index]) # Resaltar nueva
+            self.update_all_button_states()
+            self.status_message(f"Región OCR {new_index+1} añadida a sesión. Guarde para persistir.")
+        else:
+            logging.info("Selección OCR cancelada.")
+            self.status_message("Marcado de región OCR cancelado.")
 
-           # Limpiar el campo de texto esperado DESPUÉS de usarlo
-           self.expected_text_var.set("")
-
-           # Actualizar UI
-           self.update_region_label()
-           self._populate_ocr_treeview() # Añadir al Treeview
-           self.show_preview() # Redibujar preview
-
-           # Habilitar botones de limpiar/guardar
-           self.clear_regions_button.config(state="normal")
-           if self.current_template_name: # Habilitar guardar solo si hay plantilla seleccionada
-                self.save_ocr_button.config(state="normal")
-
-           # Mensaje de estado más informativo
-           status_msg = f"Región OCR {region_index} añadida"
-           if expected_texts:
-               status_msg += f" con texto esperado: {expected_texts}."
-           else:
-               status_msg += " (sin texto esperado asociado)."
-           status_msg += " Marca más o guarda."
-           self.status_message(status_msg)
-       else:
-           logging.info("Selección de región OCR cancelada.")
-           messagebox.showinfo("Cancelado", "No se seleccionó ninguna región OCR.")
-           self.status_message("Selección de región OCR cancelada.")
+    def edit_ocr_text_action_prompt(self, region_index):
+        """Pide nuevo texto y llama a la acción de edición."""
+        if not (0 <= region_index < len(self.current_ocr_regions)):
+             logging.error(f"Índice {region_index} inválido para editar texto.")
+             messagebox.showerror("Error Interno", "Índice de región inválido.", parent=self)
+             return
+        try:
+            current_texts = self.current_ocr_regions[region_index].get('expected_text', [])
+            initial_text = "|".join(current_texts)
+            new_text_str = simpledialog.askstring("Editar Texto Esperado",
+                                                  f"Texto(s) para región {region_index+1} (separa con '|'):",
+                                                  initialvalue=initial_text, parent=self)
+            if new_text_str is not None:
+                new_texts_list = [txt.strip() for txt in new_text_str.split('|') if txt.strip()]
+                self.edit_ocr_text_action(region_index, new_texts_list) # Llamar a la lógica de actualización
+            else:
+                self.status_message("Edición cancelada.")
+        except Exception as e:
+             logging.exception(f"Error en prompt edición OCR idx {region_index}: {e}")
+             messagebox.showerror("Error", f"Error editando texto:\n{e}", parent=self)
 
 
-   def update_region_label(self):
+    def edit_ocr_text_action(self, region_index, new_text_list):
+        """Edita el texto de una región OCR en memoria."""
+        if not (0 <= region_index < len(self.current_ocr_regions)): return # Doble check
+        logging.info(f"Actualizando texto OCR región {region_index+1} a: {new_text_list}")
+        self.current_ocr_regions[region_index]['expected_text'] = new_text_list
+        # Actualizar UI
+        if self.ocr_panel: self.ocr_panel.populate_treeview(self.current_ocr_regions)
+        if self.preview_panel: self.preview_panel.update_preview(self.current_image_numpy, self.current_ocr_regions, [region_index]) # Resaltar editada
+        self.update_all_button_states()
+        self.status_message(f"Texto región {region_index+1} actualizado. Guarde para persistir.")
+
+
+    def redraw_ocr_action(self, region_index):
+        """Permite redibujar una región OCR existente."""
+        if not (0 <= region_index < len(self.current_ocr_regions)):
+             logging.error(f"Índice {region_index} inválido para redibujar.")
+             messagebox.showerror("Error Interno", "Índice de región inválido.", parent=self)
+             return
+        if self.current_image_numpy is None: messagebox.showerror("Error", "No hay imagen base.", parent=self); return
+
+        logging.info(f"Redibujando región OCR {region_index+1}...")
+        self.status_message(f"Redibujando región {region_index+1}...")
+        self.withdraw(); self.update()
+        new_coords = tk_select_ocr_region(self, self.current_image_numpy)
+        self.deiconify(); self.update()
+
+        if new_coords:
+            logging.info(f"Región {region_index+1} redibujada a: {new_coords}")
+            self.current_ocr_regions[region_index]['region'] = new_coords
+            # Actualizar UI
+            if self.ocr_panel: self.ocr_panel.populate_treeview(self.current_ocr_regions) # Repoblar por si cambia orden visual
+            if self.preview_panel: self.preview_panel.update_preview(self.current_image_numpy, self.current_ocr_regions, [region_index]) # Resaltar
+            self.update_all_button_states()
+            self.status_message(f"Región {region_index+1} redibujada. Guarde para persistir.")
+        else:
+            self.status_message(f"Redibujado región {region_index+1} cancelado.")
+
+
+    def delete_ocr_action(self, region_indices):
+        """Elimina una o más regiones OCR de la lista en memoria."""
+        if not region_indices: return # No hacer nada si la lista está vacía
+        indices_to_remove = sorted(region_indices, reverse=True) # Ordenar descendente
+        region_numbers = [i + 1 for i in region_indices]
+        num_del = len(region_indices)
+
+        if messagebox.askyesno("Confirmar", f"¿Eliminar {num_del} región(es) ({region_numbers}) de la sesión?\n(Guarde para persistir).", parent=self):
+            logging.info(f"Eliminando regiones OCR (0-based): {indices_to_remove}")
+            removed_count = 0
+            for idx in indices_to_remove:
+                if 0 <= idx < len(self.current_ocr_regions):
+                    del self.current_ocr_regions[idx]
+                    removed_count += 1
+                else:
+                    logging.warning(f"Índice {idx} inválido durante eliminación OCR.")
+            # Actualizar UI
+            if self.ocr_panel: self.ocr_panel.populate_treeview(self.current_ocr_regions)
+            if self.preview_panel: self.preview_panel.update_preview(self.current_image_numpy, self.current_ocr_regions, []) # Limpiar selección
+            self.update_all_button_states()
+            self.status_message(f"{removed_count} región(es) eliminada(s) de la sesión.")
+        else:
+            self.status_message("Eliminación regiones cancelada.")
+
+
+    def clear_ocr_session_action(self):
+        """Limpia todas las regiones OCR de la sesión actual."""
+        if not self.current_ocr_regions:
+             self.status_message("No hay regiones en sesión para limpiar.")
+             return
+        # La confirmación la hace el panel, llamar directamente a clear_ocr_regions
+        if self.ocr_panel: # Llamar al método del panel si existe
+             self.ocr_panel.clear_ocr_regions(ask_confirm=True)
+        else: # Fallback si el panel no existe
+             if messagebox.askyesno("Confirmar", "¿Limpiar TODAS las regiones OCR marcadas en esta sesión?", parent=self):
+                  self.current_ocr_regions = []
+                  # Actualizar UI manualmente si no hay panel
+                  if self.preview_panel: self.preview_panel.update_preview(self.current_image_numpy, [], [])
+                  self.update_all_button_states()
+                  self.status_message("Regiones OCR sesión eliminadas.")
+
+
+    def save_ocr_action(self):
+        """Guarda las regiones OCR actuales (en memoria) para la plantilla en JSON."""
+        if not self.current_template_name:
+            messagebox.showerror("Error", "Seleccione una plantilla primero.", parent=self)
+            return
+
+        num_regions_mem = len(self.current_ocr_regions)
+        logging.info(f"Guardando {num_regions_mem} regiones OCR para plantilla '{self.current_template_name}'")
+        self.status_message("Guardando zonas OCR...")
+
+        # La confirmación de borrado si está vacío la hace el panel, pero podemos añadir una general
+        if not messagebox.askyesno("Confirmar Guardado OCR",
+                                  f"Se guardarán {num_regions_mem} zona(s) OCR para la plantilla '{self.current_template_name}'.\n"
+                                  f"Esto SOBRESCRIBIRÁ las zonas previamente guardadas para esta plantilla en\n"
+                                  f"'{os.path.basename(OCR_MAPPING_FILE_PATH)}'.\n\n¿Continuar?", parent=self):
+            self.status_message("Guardado OCR cancelado.")
+            return
+
+        try:
+            ocr_mapping = load_ocr_data()
+            # Actualizar o añadir la entrada para la plantilla actual
+            ocr_mapping[self.current_template_name] = self.current_ocr_regions
+
+            if save_ocr_data(ocr_mapping):
+                self.ocr_regions_mapping = ocr_mapping # Actualizar estado interno
+                messagebox.showinfo("Éxito", f"Zonas OCR guardadas para '{self.current_template_name}'.", parent=self)
+                self.status_message(f"Zonas OCR guardadas para '{self.current_template_name}'.")
+                # Los botones deberían seguir habilitados si corresponde
+                self.update_all_button_states()
+            else:
+                # save_ocr_data ya muestra error
+                self.status_message(f"Error al guardar zonas OCR para '{self.current_template_name}'.", level=logging.ERROR)
+
+        except Exception as e:
+             logging.exception(f"Error en save_ocr_action para '{self.current_template_name}'")
+             messagebox.showerror("Error Guardando", f"Error inesperado guardando OCR:\n{e}", parent=self)
+             self.status_message("Error guardando OCR.", level=logging.ERROR)
+
+
+    # --- Método Callback para Resaltado ---
+    def handle_ocr_selection_change(self, selected_indices):
+            """Actualiza la preview cuando cambia la selección en OcrPanel."""
+            logging.debug(f"Actualizando resaltado preview para índices: {selected_indices}")
+            if self.preview_panel:
+                 self.preview_panel.update_preview(
+                     self.current_image_numpy,
+                     self.current_ocr_regions,
+                     selected_indices # Pasar los índices seleccionados
+                 )
+
+
+    # --- Métodos Utilidad y Cierre ---
+    def status_message(self, message, level=logging.INFO):
         # (Sin cambios)
-       count = len(self.ocr_regions)
-       self.region_label.config(text=f"Zonas OCR: {count} definida(s)")
+        fg = "black";
+        try:
+            if level == logging.ERROR: fg = "red"; logging.error(message)
+            elif level == logging.WARNING: fg = "orange"; logging.warning(message)
+            else: logging.info(message)
+            if hasattr(self, 'status_label_var') and self.status_label_var: self.status_label_var.set(message)
+            if hasattr(self, 'status_bar') and self.status_bar: self.status_bar.config(foreground=fg)
+            self.update_idletasks()
+        except Exception as e: print(f"[ERR STATUS] {message} ({e})")
+    def _on_close(self):
+        # (Sin cambios)
+        logging.info("Solicitud cierre.");
+        if messagebox.askokcancel("Salir", "¿Seguro?", parent=self): logging.info(f"{'='*20} App cerrada {'='*20}"); self.destroy()
 
-
-   def clear_ocr_regions(self):
-       """Limpia lista de regiones OCR, previsualización, label y Treeview."""
-       if not self.ocr_regions: return
-       if messagebox.askyesno("Confirmar Limpieza", "¿Eliminar TODAS las regiones OCR marcadas actualmente para esta imagen?"):
-            logging.info("Limpiando regiones OCR de la sesión actual.")
-            self.ocr_regions = []
-            self.update_region_label()
-            self._populate_ocr_treeview() # Limpiar Treeview también
-            self.show_preview()
-            self.save_ocr_button.config(state="disabled")
-            self.clear_regions_button.config(state="disabled") # Ya no hay nada que limpiar
-            self.status_message("Regiones OCR marcadas eliminadas.")
-       else:
-            self.status_message("Limpieza de regiones cancelada.")
-
-
-   def save_ocr_regions(self, force_template_name=None):
-       # (Sin cambios respecto a la versión anterior que te di)
-       template_name = force_template_name if force_template_name else self.template_name_var.get().strip()
-       if not template_name:
-            messagebox.showerror("Error", "No hay plantilla seleccionada para asociar las regiones OCR.")
-            return
-       if not self.ocr_regions:
-           if messagebox.askyesno("Confirmar Borrado",
-                                  f"No hay zonas OCR marcadas.\n"
-                                  f"¿ELIMINAR TODAS las zonas OCR existentes para '{template_name}' del archivo JSON?"):
-                logging.info(f"Confirmada eliminación de regiones OCR para '{template_name}'.")
-           else:
-                self.status_message("Guardado cancelado."); return
-       mapping = load_ocr_data()
-       mapping[template_name] = self.ocr_regions
-       logging.info(f"Guardando {len(self.ocr_regions)} regiones OCR para '{template_name}'. JSON: {json.dumps(self.ocr_regions)}") # Log más detallado
-       if save_ocr_data(mapping):
-           self.ocr_regions_mapping = mapping
-           messagebox.showinfo("Éxito", f"Zonas OCR guardadas para '{template_name}'.")
-           self.status_message(f"Zonas OCR guardadas para '{template_name}'.")
-           # El botón Guardar debería seguir habilitado si hay regiones y plantilla
-           self.save_ocr_button.config(state="normal" if self.ocr_regions and self.current_template_name else "disabled")
-       else:
-           self.status_message(f"Error al guardar zonas OCR para '{template_name}'.")
-
-
-   def status_message(self, message):
-        # (Sin cambios respecto a la versión anterior que te di)
-       logging.info(f"Status: {message}")
-       self.status_label_var.set(message)
-       self.update_idletasks()
-
-
+# --- Punto de Entrada ---
 if __name__ == "__main__":
-    # (Sin cambios respecto a la versión anterior que te di)
-   if not os.path.exists(IMAGES_DIR): os.makedirs(IMAGES_DIR)
-   if not os.path.exists(CONFIG_DIR): os.makedirs(CONFIG_DIR)
-   if not os.path.exists(os.path.dirname(log_file_path)): os.makedirs(os.path.dirname(log_file_path))
-   app = TemplateManagerGUI()
-   app.mainloop()
+    # (Sin cambios)
+    os.makedirs(IMAGES_DIR, exist_ok=True); os.makedirs(CONFIG_DIR, exist_ok=True); os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+    def handle_exception(et, ev, etb): logging.error("Excep Tk:", exc_info=(et,ev,etb)); messagebox.showerror("Error GUI", f"Error:\n{ev}\nLog: {log_file_path}.")
+    tk.Tk.report_callback_exception = handle_exception
+    try: app = TemplateManagerGUI(); app.mainloop()
+    except Exception as e:
+        logging.critical("Error fatal", exc_info=True);
+        try: root=tk.Tk(); root.withdraw(); messagebox.showerror("Error Fatal", f"Error crítico:\n{e}")
+        except: pass
+        sys.exit(1)
 
-# --- END OF FILE template_manager_gui ---
+# --- END OF FILE src/template_manager_gui.py ---

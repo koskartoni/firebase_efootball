@@ -2622,3 +2622,168 @@
 2025-04-15 13:31:32,635 - INFO - [template_manager_gui.py:474] - Cargados 65 nombres de plantillas en el Combobox.
 2025-04-15 13:31:32,636 - INFO - [template_manager_gui.py:326] - Cargadas 60 entradas de regiones OCR desde JSON.
 2025-04-15 13:31:32,636 - INFO - [template_manager_gui.py:282] - Template Manager GUI inicializado.
+2025-04-15 17:14:02,861 - INFO [template_manager_gui.py:43] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.2 - Base Estable) ====================
+2025-04-15 17:14:03,023 - INFO [template_manager_gui.py:56] - Inicializando TemplateManagerGUI.
+2025-04-15 17:14:03,133 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 17:14:03,133 - INFO [template_manager_gui.py:95] - Tema: clam
+2025-04-15 17:14:03,156 - INFO [template_manager_gui.py:210] - Cargando...
+2025-04-15 17:14:03,197 - INFO [template_manager_gui.py:137] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 17:14:03,197 - INFO [template_manager_gui.py:210] - Config cargada.
+2025-04-15 17:14:03,198 - INFO [template_manager_gui.py:210] - Listo.
+2025-04-15 17:14:03,198 - INFO [template_manager_gui.py:87] - GUI inicializada.
+2025-04-15 17:14:03,198 - INFO [template_manager_gui.py:210] - Listo.
+2025-04-15 17:14:10,287 - INFO [template_manager_gui.py:216] - Solicitud cierre.
+2025-04-15 17:14:11,611 - INFO [template_manager_gui.py:217] - ==================== App cerrada ====================
+2025-04-15 17:43:53,322 - INFO [template_manager_gui.py:44] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.2 - Base Estable) ====================
+2025-04-15 17:43:53,391 - INFO [template_manager_gui.py:57] - Inicializando TemplateManagerGUI.
+2025-04-15 17:43:53,464 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 17:43:53,464 - INFO [template_manager_gui.py:96] - Tema: clam
+2025-04-15 17:43:53,488 - INFO [template_manager_gui.py:220] - Cargando...
+2025-04-15 17:43:53,519 - INFO [template_manager_gui.py:142] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 17:43:53,519 - INFO [template_manager_gui.py:220] - Config cargada.
+2025-04-15 17:43:53,520 - INFO [template_manager_gui.py:220] - Listo.
+2025-04-15 17:43:53,520 - INFO [template_manager_gui.py:88] - GUI inicializada.
+2025-04-15 17:43:53,520 - INFO [template_manager_gui.py:220] - Listo.
+2025-04-15 17:43:59,945 - INFO [template_manager_gui.py:226] - Solicitud cierre.
+2025-04-15 17:44:01,068 - INFO [template_manager_gui.py:227] - ==================== App cerrada ====================
+2025-04-15 18:21:12,550 - INFO [template_manager_gui.py:45] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.2 - Base Estable) ====================
+2025-04-15 18:21:12,658 - INFO [template_manager_gui.py:58] - Inicializando TemplateManagerGUI.
+2025-04-15 18:21:12,757 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 18:21:12,758 - INFO [template_manager_gui.py:97] - Tema: clam
+2025-04-15 18:21:12,796 - INFO [template_manager_gui.py:238] - Cargando...
+2025-04-15 18:21:12,837 - INFO [template_manager_gui.py:149] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:21:12,837 - INFO [template_manager_gui.py:238] - Config cargada.
+2025-04-15 18:21:12,837 - INFO [template_manager_gui.py:238] - Listo.
+2025-04-15 18:21:12,838 - INFO [template_manager_gui.py:89] - GUI inicializada.
+2025-04-15 18:21:12,838 - INFO [template_manager_gui.py:238] - Listo.
+2025-04-15 18:21:22,600 - INFO [template_manager_gui.py:238] - Cargando...
+2025-04-15 18:21:22,605 - INFO [template_manager_gui.py:149] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:21:22,605 - INFO [template_manager_gui.py:238] - Config cargada.
+2025-04-15 18:21:25,110 - INFO [template_manager_gui.py:154] - Selección TPL: bonus_inicio_sesion
+2025-04-15 18:21:25,119 - INFO [template_manager_gui.py:238] - Cargando 'bonus_inicio_sesion_20250413_102606.png'...
+2025-04-15 18:21:25,130 - INFO [template_manager_gui.py:169] - Cargando: C:\temp\Testing_autoefooball\images\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:21:25,131 - WARNING [template_manager_gui.py:180] - No existe: C:\temp\Testing_autoefooball\images\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:21:30,048 - INFO [template_manager_gui.py:238] - Cargando...
+2025-04-15 18:21:30,052 - INFO [template_manager_gui.py:149] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:21:30,052 - INFO [template_manager_gui.py:238] - Config cargada.
+2025-04-15 18:21:33,779 - INFO [template_manager_gui.py:154] - Selección TPL: menu_contrato_directores
+2025-04-15 18:21:33,780 - INFO [template_manager_gui.py:238] - Cargando 'menu_contrato_directores_20250413_104103.png'...
+2025-04-15 18:21:33,792 - INFO [template_manager_gui.py:169] - Cargando: C:\temp\Testing_autoefooball\images\menu_contrato_directores_20250413_104103.png
+2025-04-15 18:21:33,793 - WARNING [template_manager_gui.py:180] - No existe: C:\temp\Testing_autoefooball\images\menu_contrato_directores_20250413_104103.png
+2025-04-15 18:21:40,793 - INFO [template_manager_gui.py:244] - Solicitud cierre.
+2025-04-15 18:21:42,115 - INFO [template_manager_gui.py:245] - ==================== App cerrada ====================
+2025-04-15 18:22:19,637 - INFO [template_manager_gui.py:45] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.2 - Base Estable) ====================
+2025-04-15 18:22:19,731 - INFO [template_manager_gui.py:58] - Inicializando TemplateManagerGUI.
+2025-04-15 18:22:19,812 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 18:22:19,812 - INFO [template_manager_gui.py:97] - Tema: clam
+2025-04-15 18:22:19,844 - INFO [template_manager_gui.py:238] - Cargando...
+2025-04-15 18:22:19,878 - INFO [template_manager_gui.py:149] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:22:19,878 - INFO [template_manager_gui.py:238] - Config cargada.
+2025-04-15 18:22:19,878 - INFO [template_manager_gui.py:238] - Listo.
+2025-04-15 18:22:19,878 - INFO [template_manager_gui.py:89] - GUI inicializada.
+2025-04-15 18:22:19,878 - INFO [template_manager_gui.py:238] - Listo.
+2025-04-15 18:22:22,568 - INFO [template_manager_gui.py:154] - Selección TPL: bonus_inicio_sesion
+2025-04-15 18:22:22,569 - INFO [template_manager_gui.py:238] - Cargando 'bonus_inicio_sesion_20250413_102606.png'...
+2025-04-15 18:22:22,578 - INFO [template_manager_gui.py:169] - Cargando: C:\temp\Testing_autoefooball\images\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:22:22,601 - INFO [template_manager_gui.py:174] - 'bonus_inicio_sesion_20250413_102606.png' cargada.
+2025-04-15 18:22:22,601 - INFO [template_manager_gui.py:238] - Mostrando: bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:22:27,981 - INFO [template_manager_gui.py:154] - Selección TPL: fpartido_on_final_siguiente
+2025-04-15 18:22:27,982 - INFO [template_manager_gui.py:238] - Cargando 'fpartido_on_final_siguiente_20250413_122701.png'...
+2025-04-15 18:22:27,992 - INFO [template_manager_gui.py:169] - Cargando: C:\temp\Testing_autoefooball\images\fpartido_on_final_siguiente_20250413_122701.png
+2025-04-15 18:22:28,004 - INFO [template_manager_gui.py:174] - 'fpartido_on_final_siguiente_20250413_122701.png' cargada.
+2025-04-15 18:22:28,005 - INFO [template_manager_gui.py:238] - Mostrando: fpartido_on_final_siguiente_20250413_122701.png
+2025-04-15 18:22:42,085 - INFO [template_manager_gui.py:154] - Selección TPL: menu_contrato_boletos_sel
+2025-04-15 18:22:42,086 - INFO [template_manager_gui.py:238] - Cargando 'menu_contrato_boletos_sel_20250413_103852.png'...
+2025-04-15 18:22:42,095 - INFO [template_manager_gui.py:169] - Cargando: C:\temp\Testing_autoefooball\images\menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:42,128 - INFO [template_manager_gui.py:174] - 'menu_contrato_boletos_sel_20250413_103852.png' cargada.
+2025-04-15 18:22:42,129 - INFO [template_manager_gui.py:238] - Mostrando: menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:43,363 - INFO [template_manager_gui.py:161] - Selección IMG: menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:43,363 - INFO [template_manager_gui.py:238] - Cargando 'menu_contrato_boletos_sel_20250413_103852.png'...
+2025-04-15 18:22:43,365 - INFO [template_manager_gui.py:169] - Cargando: C:\temp\Testing_autoefooball\images\menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:43,396 - INFO [template_manager_gui.py:174] - 'menu_contrato_boletos_sel_20250413_103852.png' cargada.
+2025-04-15 18:22:43,396 - INFO [template_manager_gui.py:238] - Mostrando: menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:44,324 - INFO [template_manager_gui.py:161] - Selección IMG: menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:44,324 - INFO [template_manager_gui.py:238] - Cargando 'menu_contrato_boletos_sel_20250413_103852.png'...
+2025-04-15 18:22:44,327 - INFO [template_manager_gui.py:169] - Cargando: C:\temp\Testing_autoefooball\images\menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:44,359 - INFO [template_manager_gui.py:174] - 'menu_contrato_boletos_sel_20250413_103852.png' cargada.
+2025-04-15 18:22:44,359 - INFO [template_manager_gui.py:238] - Mostrando: menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:22:51,613 - INFO [template_manager_gui.py:244] - Solicitud cierre.
+2025-04-15 18:22:52,771 - INFO [template_manager_gui.py:245] - ==================== App cerrada ====================
+2025-04-15 18:32:30,345 - INFO [template_manager_gui.py:44] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.3 - Lógica) ====================
+2025-04-15 18:32:30,428 - INFO [template_manager_gui.py:58] - Inicializando...
+2025-04-15 18:32:30,505 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 18:32:30,505 - INFO [template_manager_gui.py:74] - Tema: clam
+2025-04-15 18:32:30,536 - INFO [template_manager_gui.py:628] - Cargando...
+2025-04-15 18:32:30,573 - INFO [template_manager_gui.py:143] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:32:30,573 - INFO [template_manager_gui.py:628] - Configuraciones cargadas.
+2025-04-15 18:32:30,574 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:32:30,575 - INFO [template_manager_gui.py:64] - GUI inicializada.
+2025-04-15 18:32:30,575 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:32:34,961 - INFO [template_manager_gui.py:151] - Selección TPL: bonus_inicio_sesion
+2025-04-15 18:32:34,962 - INFO [template_manager_gui.py:628] - Cargando 'bonus_inicio_sesion_20250413_102606.png'...
+2025-04-15 18:32:34,973 - INFO [template_manager_gui.py:170] - Cargando: C:\temp\Testing_autoefooball\images\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:32:34,976 - INFO [template_manager_gui.py:175] - 'bonus_inicio_sesion_20250413_102606.png' cargada.
+2025-04-15 18:32:35,028 - INFO [template_manager_gui.py:628] - Mostrando: bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:32:38,682 - INFO [template_manager_gui.py:151] - Selección TPL: menu_contrato_jugadoresNormales_lista_raquel_sel
+2025-04-15 18:32:38,683 - INFO [template_manager_gui.py:628] - Cargando 'menu_contrato_jugadoresNormales_lista_raquel_sel_20250413_105000.png'...
+2025-04-15 18:32:38,693 - INFO [template_manager_gui.py:170] - Cargando: C:\temp\Testing_autoefooball\images\menu_contrato_jugadoresNormales_lista_raquel_sel_20250413_105000.png
+2025-04-15 18:32:38,705 - INFO [template_manager_gui.py:175] - 'menu_contrato_jugadoresNormales_lista_raquel_sel_20250413_105000.png' cargada.
+2025-04-15 18:32:38,712 - INFO [template_manager_gui.py:628] - Mostrando: menu_contrato_jugadoresNormales_lista_raquel_sel_20250413_105000.png
+2025-04-15 18:32:42,870 - INFO [template_manager_gui.py:635] - Solicitud cierre.
+2025-04-15 18:32:44,210 - INFO [template_manager_gui.py:636] - ==================== App cerrada ====================
+2025-04-15 18:32:59,549 - INFO [template_manager_gui.py:44] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.3 - Lógica) ====================
+2025-04-15 18:32:59,621 - INFO [template_manager_gui.py:58] - Inicializando...
+2025-04-15 18:32:59,696 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 18:32:59,696 - INFO [template_manager_gui.py:74] - Tema: clam
+2025-04-15 18:32:59,725 - INFO [template_manager_gui.py:628] - Cargando...
+2025-04-15 18:32:59,765 - INFO [template_manager_gui.py:143] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:32:59,766 - INFO [template_manager_gui.py:628] - Configuraciones cargadas.
+2025-04-15 18:32:59,767 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:32:59,767 - INFO [template_manager_gui.py:64] - GUI inicializada.
+2025-04-15 18:32:59,768 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:33:02,219 - INFO [template_manager_gui.py:151] - Selección TPL: bonus_inicio_sesion
+2025-04-15 18:33:02,220 - INFO [template_manager_gui.py:628] - Cargando 'bonus_inicio_sesion_20250413_102606.png'...
+2025-04-15 18:33:02,228 - INFO [template_manager_gui.py:170] - Cargando: C:\temp\Testing_autoefooball\images\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:33:02,229 - WARNING [template_manager_gui.py:182] - No existe: C:\temp\Testing_autoefooball\images\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:33:04,283 - INFO [template_manager_gui.py:635] - Solicitud cierre.
+2025-04-15 18:33:05,503 - INFO [template_manager_gui.py:636] - ==================== App cerrada ====================
+2025-04-15 18:33:28,430 - INFO [template_manager_gui.py:44] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.3 - Lógica) ====================
+2025-04-15 18:33:28,592 - INFO [template_manager_gui.py:58] - Inicializando...
+2025-04-15 18:33:28,685 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 18:33:28,685 - INFO [template_manager_gui.py:74] - Tema: clam
+2025-04-15 18:33:28,724 - INFO [template_manager_gui.py:628] - Cargando...
+2025-04-15 18:33:28,762 - INFO [template_manager_gui.py:143] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:33:28,762 - INFO [template_manager_gui.py:628] - Configuraciones cargadas.
+2025-04-15 18:33:28,763 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:33:28,763 - INFO [template_manager_gui.py:64] - GUI inicializada.
+2025-04-15 18:33:28,763 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:33:32,488 - INFO [template_manager_gui.py:151] - Selección TPL: bonus_inicio_sesion
+2025-04-15 18:33:32,489 - INFO [template_manager_gui.py:628] - Cargando 'bonus_inicio_sesion_20250413_102606.png'...
+2025-04-15 18:33:32,498 - INFO [template_manager_gui.py:170] - Cargando: C:\temp\Testing_autoefooball\images\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:33:32,501 - INFO [template_manager_gui.py:175] - 'bonus_inicio_sesion_20250413_102606.png' cargada.
+2025-04-15 18:33:32,513 - INFO [template_manager_gui.py:628] - Mostrando: bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:33:35,241 - INFO [template_manager_gui.py:151] - Selección TPL: menu_home_partido_sel
+2025-04-15 18:33:35,242 - INFO [template_manager_gui.py:628] - Cargando 'menu_home_partido_sel_20250413_102753.png'...
+2025-04-15 18:33:35,252 - INFO [template_manager_gui.py:170] - Cargando: C:\temp\Testing_autoefooball\images\menu_home_partido_sel_20250413_102753.png
+2025-04-15 18:33:35,265 - INFO [template_manager_gui.py:175] - 'menu_home_partido_sel_20250413_102753.png' cargada.
+2025-04-15 18:33:35,271 - INFO [template_manager_gui.py:628] - Mostrando: menu_home_partido_sel_20250413_102753.png
+2025-04-15 18:34:05,194 - INFO [template_manager_gui.py:44] - 
+==================== Iniciando Template Manager GUI (Refactorizado v1.3 - Lógica) ====================
+2025-04-15 18:34:05,331 - INFO [template_manager_gui.py:58] - Inicializando...
+2025-04-15 18:34:05,412 - INFO [template_manager_utils.py:61] - Monitores: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 18:34:05,412 - INFO [template_manager_gui.py:74] - Tema: clam
+2025-04-15 18:34:05,439 - INFO [template_manager_gui.py:628] - Cargando...
+2025-04-15 18:34:05,477 - INFO [template_manager_gui.py:143] - Cargados 65 tpls y 60 OCRs.
+2025-04-15 18:34:05,477 - INFO [template_manager_gui.py:628] - Configuraciones cargadas.
+2025-04-15 18:34:05,478 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:34:05,478 - INFO [template_manager_gui.py:64] - GUI inicializada.
+2025-04-15 18:34:05,478 - INFO [template_manager_gui.py:628] - Listo.
+2025-04-15 18:34:10,457 - INFO [template_manager_gui.py:635] - Solicitud cierre.
+2025-04-15 18:34:11,697 - INFO [template_manager_gui.py:636] - ==================== App cerrada ====================

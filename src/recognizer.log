@@ -2207,3 +2207,151 @@ This probably means that Tcl wasn't installed properly.
 2025-04-15 14:25:08,155 - INFO - [screen_tester_gui.py:259] - Listo.
 2025-04-15 14:25:10,996 - INFO - [screen_tester_gui.py:708] - Solicitud de cierre...
 2025-04-15 14:25:14,009 - INFO - [screen_tester_gui.py:710] - ==================== Aplicación cerrada ====================
+2025-04-15 18:35:10,590 - INFO - [screen_tester_gui.py:78] - 
+==================== Iniciando Screen Tester GUI ====================
+2025-04-15 18:35:10,713 - INFO - [screen_tester_gui.py:95] - Inicializando la ventana principal de la GUI.
+2025-04-15 18:35:10,802 - INFO - [screen_recognizer.py:128] - Monitores detectados: 1
+2025-04-15 18:35:10,802 - INFO - [screen_recognizer.py:159] - Cargando/Recargando datos de reconocimiento...
+2025-04-15 18:35:10,804 - INFO - [screen_recognizer.py:190] - Cargando plantillas desde: C:\temp\Testing_autoefooball\images\4K (Resolución: 4K)
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\pantalla_bienvenida_20250412_204658.png
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\pantalla_bienvenida_20250413_170452.png
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'pantalla_bienvenida'.
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home_sel_20250412_205129.png
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home_sel_20250413_172234.png
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_home_sel'.
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_misiones_sel_20250412_205404.png
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_misiones_sel'.
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_tienda_sel_20250412_205624.png
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_tienda_sel'.
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_extras_sel_20250412_205734.png
+2025-04-15 18:35:10,805 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_extras_sel'.
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\bonus_inicio_sesion_20250413_102606.png
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'bonus_inicio_sesion'.
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home_partido_sel_20250413_102753.png
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_home_partido_sel'.
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home_estrategia_sel_20250413_102846.png
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_home_estrategia_sel'.
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home__miequipo_sel_20250413_102933.png
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_home__miequipo_sel'.
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home_contrato_sel_20250413_103017.png
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_home_contrato_sel'.
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home_premijuego_sel_20250413_103053.png
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_home_premijuego_sel'.
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_home_salir_20250413_103135.png
+2025-04-15 18:35:10,806 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_home_salir'.
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_jugadores_especiales_sel_20250413_103551.png
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_jugadores_especiales_sel'.
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_packs_sel_20250413_103738.png
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_packs_sel'.
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_boletos_sel_20250413_103852.png
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_boletos_sel'.
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_jugadores_normales_sel_20250413_104011.png
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_jugadores_normales_sel'.
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_directores_20250413_104103.png
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_directores'.
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_jugadoresNormales_lista_20250413_104826.png
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_jugadoresNormales_lista'.
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_jugadoresNormales_lista_raquel_sel_20250413_105000.png
+2025-04-15 18:35:10,807 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_jugadoresNormales_lista_raquel_sel'.
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_raquel_fichar_20250413_111822.png
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_raquel_fichar'.
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_raquel_confirmar_fichar_cancelar_sel_20250413_111952.png
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_raquel_confirmar_fichar_cancelar_sel'.
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_raquel_confirmar_fichar_GP_sel_20250413_112037.png
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_raquel_confirmar_fichar_GP_sel'.
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_raquel_comprado_20250413_112145.png
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_raquel_comprado'.
+2025-04-15 18:35:10,808 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_contrato_raquel_confirmar_fichado_20250413_112227.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_contrato_raquel_confirmar_fichado'.
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\submenu_contrato_jugadores_normales_ordenar_20250413_112407.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'submenu_contrato_jugadores_normales_ordenar'.
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\submenu_contrato_ordenar_precio_sel_20250413_112505.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'submenu_contrato_ordenar_precio_sel'.
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\submenu_contrato_jugadores_valor_sel_20250413_112630.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'submenu_contrato_jugadores_valor_sel'.
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\submenu_contrato_jugadores_valoracion_sel_20250413_112722.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'submenu_contrato_jugadores_valoracion_sel'.
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\submenu_contrato_jugadores_posicion_sel_20250413_112809.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'submenu_contrato_jugadores_posicion_sel'.
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_miequipo_jugadores_sel_20250413_113009.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_miequipo_jugadores_sel'.
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_miequipo_jugadores_lista_pos1_sel_20250413_113223.png
+2025-04-15 18:35:10,809 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_miequipo_jugadores_lista_pos1_sel'.
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_miequipo_jugadores_pos2_sel_20250413_113338.png
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_miequipo_jugadores_pos2_sel'.
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_miequipo_jugadores_lista_20250413_113432.png
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_miequipo_jugadores_lista'.
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_miequipo_jugadores_raquel_sel_20250413_113704.png
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_miequipo_jugadores_raquel_sel'.
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_entrenamiento_sel_20250413_113854.png
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_entrenamiento_sel'.
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_progresion_sel_20250413_113946.png
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_progresion_sel'.
+2025-04-15 18:35:10,810 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_habilidad_sel_20250413_114051.png
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_habilidad_sel'.
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_posicion_sel_20250413_114142.png
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_posicion_sel'.
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_transferencia_sel_20250413_114227.png
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_transferencia_sel'.
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_bloquear_20250413_114344.png
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_bloquear'.
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_despedir_20250413_114412.png
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_despedir'.
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_accione_habilidad_vacia_20250413_114515.png
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_accione_habilidad_vacia'.
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_habilidad_menuentrenar_cancelar_sel_20250413_114727.png
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_habilidad_menuentrenar_cancelar_sel'.
+2025-04-15 18:35:10,811 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_submenu_entrenar_x1_sel_20250413_114857.png
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_submenu_entrenar_x1_sel'.
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_habilidad_entrenada_20250413_115020.png
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_habilidad_entrenada'.
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_jugador_acciones_habilidad_existe_20250413_115118.png
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_jugador_acciones_habilidad_existe'.
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_torneo_sel_20250413_115330.png
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_torneo_sel'.
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_eventos_sel_20250413_115422.png
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_eventos_sel'.
+2025-04-15 18:35:10,812 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_eventos_JcJ_sel_20250413_115516.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_eventos_JcJ_sel'.
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_eventos_IA_sel_20250413_115603.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_eventos_IA_sel'.
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_eventos_ia_partido1_sel_20250413_115703.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_eventos_ia_partido1_sel'.
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_eventos_ia_partido2_sel_20250413_115804.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_eventos_ia_partido2_sel'.
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_eventos_ia_partido_20250413_120019.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_eventos_ia_partido'.
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\menu_partido_submenu_estrategia_pre_partido_20250413_120432.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'menu_partido_submenu_estrategia_pre_partido'.
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_on_estadio_sel_20250413_120648.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_on_estadio_sel'.
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_on_uniforme_sel_20250413_120745.png
+2025-04-15 18:35:10,813 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_on_uniforme_sel'.
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_on_estrategia_sel_20250413_120846.png
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_on_estrategia_sel'.
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_on_descanso_20250413_121818.png
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_on_descanso'.
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_on_final_20250413_122605.png
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_on_final'.
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\fpartido_on_final_siguiente_20250413_122701.png
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'fpartido_on_final_siguiente'.
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_on_final_recompensa1_20250413_122739.png
+2025-04-15 18:35:10,814 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_on_final_recompensa1'.
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_on_final_pase_20250413_122843.png
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_on_final_pase'.
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_off_puntos_ganados_20250413_122931.png
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_off_puntos_ganados'.
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_off_recompensa2_20250413_123118.png
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_off_recompensa2'.
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:222] - Plantilla faltante: C:\temp\Testing_autoefooball\images\4K\partido_off_recompensa3_20250413_123237.png
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:229] - No se cargó ninguna plantilla válida para el estado 'partido_off_recompensa3'.
+2025-04-15 18:35:10,815 - INFO - [screen_recognizer.py:232] - Carga de plantillas completada. 0 cargadas, 67 errores (faltantes/corruptas).
+2025-04-15 18:35:10,815 - WARNING - [screen_recognizer.py:240] - Plantillas faltantes: 67 (ver 'C:\temp\Testing_autoefooball\logs\missing_templates.log' para detalles).
+2025-04-15 18:35:10,818 - INFO - [screen_recognizer.py:165] - Datos cargados/recargados.
+2025-04-15 18:35:10,818 - INFO - [screen_tester_gui.py:131] - Instancia de ScreenRecognizer creada.
+2025-04-15 18:35:10,818 - INFO - [screen_tester_gui.py:170] - Usando tema ttk: 'clam'
+2025-04-15 18:35:11,301 - INFO - [screen_tester_gui.py:259] - Listo.
+2025-04-15 18:35:11,335 - INFO - [screen_tester_gui.py:158] - Inicialización de la GUI completada.
+2025-04-15 18:35:11,336 - INFO - [screen_tester_gui.py:259] - Listo.
+2025-04-15 18:35:17,401 - INFO - [screen_tester_gui.py:786] - Solicitud de cierre...
+2025-04-15 18:35:18,659 - INFO - [screen_tester_gui.py:788] - ==================== Aplicación cerrada ====================
