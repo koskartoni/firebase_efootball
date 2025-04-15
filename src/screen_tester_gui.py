@@ -1,35 +1,31 @@
 # --- START OF FILE screen_tester_gui ---
-import copy
-import os
-import json
 import datetime
+import json
+import logging
+import os
+import subprocess
+import sys
+import time
 import tkinter as tk
-from tkinter import ttk, filedialog, messagebox, simpledialog # Añadido simpledialog
+from tkinter import font
+from tkinter import ttk, messagebox, simpledialog  # Añadido simpledialog
 
 # Importar CV2 solo si es estrictamente necesario aquí (para tk_select_roi)
 # Si tk_select_roi solo usa PIL/ImageTk, no es necesario. Parece que usa cv2.cvtColor.
 import cv2
-import numpy as np # Necesario para np.array en tk_select_roi
-from PIL import Image, ImageTk # Solo para tk_select_roi si se mantiene aquí
-from tkinter import font
-import time, math
-import logging
-import subprocess
-import sys
-import re # Importar re
+from PIL import Image, ImageTk  # Solo para tk_select_roi si se mantiene aquí
 
 # --- Importar lo necesario desde screen_recognizer ---
 from screen_recognizer import (
-   ScreenRecognizer,
-   save_json_mapping,
-   load_json_mapping,
-   OCR_MAPPING_FILE,
-   TEMPLATE_MAPPING_FILE,
-   STATE_ROIS_FILE,
-   DEFAULT_FONT_SIZE,
-   PROJECT_DIR,
-   IMAGES_DIR,
-   CONFIG_DIR
+    ScreenRecognizer,
+    save_json_mapping,
+    load_json_mapping,
+    OCR_MAPPING_FILE,
+    STATE_ROIS_FILE,
+    DEFAULT_FONT_SIZE,
+    PROJECT_DIR,
+    IMAGES_DIR,
+    CONFIG_DIR
 )
 
 # --- Definir constantes locales ---
