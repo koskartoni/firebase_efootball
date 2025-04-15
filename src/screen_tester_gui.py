@@ -392,6 +392,9 @@ class ScreenTesterGUI(tk.Tk):
        self.launch_capture_button.pack(side="left", padx=5)
 
 
+       self.save_result_button = ttk.Button(action_frame, text="💾 Guardar Resultados", command=self.save_recognition_result, state="normal", style="Action.TButton")
+       self.save_result_button.pack(side="left", padx=5)
+
    def create_correction_frame(self):
        """Crea el frame para la corrección manual (inicialmente oculto)."""
        self.correction_frame = ttk.LabelFrame(self, text="Corrección Manual", padding=(10, 5))
@@ -528,6 +531,7 @@ class ScreenTesterGUI(tk.Tk):
         self.roi_button.config(state="disabled")
         self.remove_roi_button.config(state="disabled")
         self.launch_capture_button.config(state="disabled")
+        self.save_result_button.config(state="normal")
 
         # Ocultar frames adicionales
         self.correction_frame.grid_forget()
@@ -1255,8 +1259,14 @@ class ScreenTesterGUI(tk.Tk):
                    # Dibujar el rectángulo
                    rect_color = "light blue"  # Puedes ajustar el color aquí
                    self.preview_canvas.create_rectangle(left, top, left + width, top + height, outline=rect_color, width=2)
+                   
+                   rect_color = "light green" if ocr_data.get('match_expected') else "lightcoral"  # Highlight matches
+                   self.preview_canvas.create_rectangle(left, top, left + width, top + height, outline=rect_color, width=2)
+                   self.preview_canvas.create_text(left + width + 5, top + height // 2,
+                                                        text=f"Conf: {ocr_data.get('confidence', 'N/A'):.2f}",  # Show confidence
+                                                        fill=rect_color, anchor=tk.W)
                    # --- Dibujar el texto extraído ---
-                   text_color = "black"  # Asegura buena legibilidad
+                   text_color = "black"
                    font_size = 8 # Ajustable
                    text_x, text_y = left + 3, top - font_size - 2  # Ajusta la posición del texto
                    if text_y < 0:
@@ -1269,6 +1279,55 @@ class ScreenTesterGUI(tk.Tk):
        except Exception as e:
            logging.error(f"Error al dibujar imagen de preview: {e}", exc_info=True)
 
+   def save_recognition_result(self):
+       """Guarda los resultados detallados del último reconocimiento en un archivo JSON."""
+       if not self.last_recognition_result:
+           self.status_message("No hay resultados de reconocimiento para guardar.")
+           messagebox.showwarning("Sin Resultados", "No hay resultados de reconocimiento para guardar.")
+           return
+
+       # Crear un timestamp para el nombre del archivo
+       timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+       filename = f"recognition_result_{timestamp}.json"
+       filepath = os.path.join(PROJECT_DIR, "logs", filename)
+
+       # Prepara los datos a guardar
+       data_to_save = {
+           "timestamp": timestamp,
+           "recognition_result": self.last_recognition_result,  # Todos los datos de reconocimiento
+           "recognizer_config": {
+               "threshold": self.recognizer.threshold,
+               "ocr_fallback_threshold": self.recognizer.ocr_fallback_threshold,
+               "monitor": self.recognizer.monitor,
+               "monitors_info": self.recognizer.monitors_info
+           }
+       }
+
+       # Convertir la imagen a base64 para incluirla en el JSON
+       screenshot = self.last_recognition_result.get("screenshot")
+       if screenshot is not None and screenshot.size > 0:
+           try:
+               screenshot_pil = Image.fromarray(cv2.cvtColor(screenshot, cv2.COLOR_BGR2RGB))
+               import base64
+               from io import BytesIO
+               buffered = BytesIO()
+               screenshot_pil.save(buffered, format="PNG")
+               screenshot_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+               data_to_save["screenshot_base64"] = screenshot_base64
+           except Exception as e:
+               logging.error(f"Error al convertir captura a base64: {e}")
+               messagebox.showwarning("Error", "No se pudo convertir la captura a base64 para guardar.")
+
+       # Guardar los datos en el archivo JSON
+       try:
+           with open(filepath, "w", encoding="utf-8") as f:
+               json.dump(data_to_save, f, ensure_ascii=False, indent=4)
+           self.status_message(f"Resultados guardados en: {filepath}")
+           logging.info(f"Resultados de reconocimiento guardados en: {filepath}")
+       except Exception as e:
+           logging.error(f"Error al guardar los resultados en {filepath}: {e}")
+           self.status_message(f"Error al guardar los resultados en: {filepath}")
+           messagebox.showerror("Error", f"No se pudieron guardar los resultados en:\n{filepath}")
 
 
 if __name__ == "__main__":

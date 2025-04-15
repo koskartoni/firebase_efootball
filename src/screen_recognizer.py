@@ -487,7 +487,7 @@ class ScreenRecognizer:
 
                    extracted_text = self._extract_and_clean_text(region_img) # Puede devolver "" si region_img es None
 
-                   match_expected = False
+                   match_expected = False # Por defecto no hay match
                    if extracted_text and expected_texts:
                        # Comparación insensible a mayúsculas/minúsculas
                        extracted_lower = extracted_text.lower()
@@ -496,7 +496,18 @@ class ScreenRecognizer:
                                match_expected = True
                                break # Suficiente con encontrar uno
 
-                   logging.info(f"    Región {idx}: Texto='{extracted_text}', Esperado={expected_texts}, Coincide={match_expected}")
+                    # --- Log de depuración detallado de cada región OCR ---
+                   # Obtener la confianza desde pytesseract (si está disponible)
+                   try:
+                       ocr_data = pytesseract.image_to_data(region_img, output_type=pytesseract.Output.DICT, lang=self.ocr_lang, config=self.ocr_config)
+                       confidence = float(ocr_data['conf'][0]) if ocr_data['conf'][0] != '-1' else None # '-1' en Tesseract significa sin confianza
+                   except Exception as e:
+                       logging.error(f"Error al obtener confianza de pytesseract: {e}")
+                       confidence = None # No confianza
+                   logging.debug(f"    Región {idx} ({region_coords}): Texto='{extracted_text}', Esperado={expected_texts}, Coincide={match_expected}, Confianza={confidence}")
+                   # --- Log de resumen
+                   logging.info(f"    Región {idx}: Texto='{extracted_text}', Esperado={expected_texts}, Coincide={match_expected}, Confianza={confidence}")
+
 
                    # Guardar resultados detallados para esta región
                    ocr_results_for_state[idx] = {
@@ -572,10 +583,15 @@ class ScreenRecognizer:
            text = text.replace('\n', ' ').replace('\r', '') # Reemplazar saltos de línea
            # Eliminar caracteres no deseados (ajustar regex según necesidad)
            # Permite letras (con acentos, ñ, ü), números, espacios, y algunos símbolos comunes
-           text = re.sub(r'[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ\s()\-.:]', '', text)
+           text = re.sub(r'[^a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ\s()\-.:,%]', '', text)
            text = re.sub(r'\s+', ' ', text).strip() # Normalizar espacios múltiples
 
            # logging.debug(f"Texto OCR extraído y limpiado: '{text}'")
+            logging.debug(f"Extracción de texto OCR completa: {text}")
+            
+            
+       except pytesseract.TesseractError as e:
+           logging.error(f"Error de Tesseract durante el OCR: {e}")
            return text
        except pytesseract.TesseractNotFoundError:
            logging.error("Error de Tesseract: Ejecutable no encontrado o no está en el PATH.")
