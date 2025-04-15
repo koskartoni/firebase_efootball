@@ -2616,3 +2616,9 @@
 2025-04-13 20:06:10,483 - INFO - [template_manager_gui.py:497] - Intentando cargar imagen: C:\Users\koska\OneDrive\Documentos\DOCUMENTOS_OSKAR\efootball_automation_mejorado_20250403_022745\images\menu_tienda_sel_20250412_205624.png para plantilla 'menu_tienda_sel'
 2025-04-13 20:06:10,485 - INFO - [template_manager_gui.py:511] - Imagen 'menu_tienda_sel_20250412_205624.png' cargada para 'menu_tienda_sel'.
 2025-04-13 20:06:10,485 - INFO - [template_manager_gui.py:817] - Status: 'menu_tienda_sel' seleccionado. 1 zona(s) OCR cargada(s).
+2025-04-15 13:31:32,579 - INFO - [template_manager_gui.py:316] - Monitores detectados: [{'left': 0, 'top': 0, 'width': 1920, 'height': 1080}, {'left': 0, 'top': 0, 'width': 1920, 'height': 1080}]
+2025-04-15 13:31:32,608 - INFO - [template_manager_gui.py:817] - Status: Cargando lista de plantillas...
+2025-04-15 13:31:32,634 - INFO - [template_manager_gui.py:817] - Status: Lista de plantillas refrescada (65 encontrada(s)). Seleccione una.
+2025-04-15 13:31:32,635 - INFO - [template_manager_gui.py:474] - Cargados 65 nombres de plantillas en el Combobox.
+2025-04-15 13:31:32,636 - INFO - [template_manager_gui.py:326] - Cargadas 60 entradas de regiones OCR desde JSON.
+2025-04-15 13:31:32,636 - INFO - [template_manager_gui.py:282] - Template Manager GUI inicializado.

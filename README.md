@@ -85,6 +85,7 @@ La suite está diseñada para facilitar la automatización de acciones como fich
     *   **src/** `# Código fuente principal de Python`
         *   **config/** `# (Posible módulo config interno)`
         *   **config_interface/** `# (Posible GUI config interna)`
+        *    **panels/** `# (paneles)`
         *   `banner_skipper.py` `# Lógica específica para saltar banners`
         *   `config.json` `# (Configuración local de GUIs, como último origen)`
         *   `config_system.py` `# (Manejo de carga/guardado de configs)`
